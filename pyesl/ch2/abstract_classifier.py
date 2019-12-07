@@ -8,35 +8,35 @@ class AbstractClassifier(object):
 
     def __init__(self):
 
-        self.__n_fit_points = None
-        self.__n_features = None
+        self._n_fit_points = None
+        self._n_features = None
 
-        self.__n_levels = None
-        self.__sorted_levels = None
+        self._n_levels = None
+        self._sorted_levels = None
 
     @property
     def n_levels(self) -> int:
         """ Returns the number of levels in the target categorical variable, as seen during the fit."""
 
-        return self.__n_levels
+        return self._n_levels
 
     @property
     def n_fit_points(self) -> int:
         """ Returns the number of datapoints seen in the fit."""
 
-        return self.__n_fit_points
+        return self._n_fit_points
 
     @property
     def n_features(self) -> int:
         """ Returns the number of features seen in the fit."""
 
-        return self.__n_features
+        return self._n_features
 
     @property
     def sorted_levels(self) -> np.ndarray:
         """ Returns the array of (distinct) levels of the target categorical variable, as seen during the fit."""
 
-        return self.__sorted_levels
+        return self._sorted_levels
 
     def train(self, X: np.ndarray, G: np.ndarray) -> None:
         """ Trains the classifier.
@@ -48,13 +48,13 @@ class AbstractClassifier(object):
 
         assert G.shape[0] > 0, "Zero length array cannot be used to train the classifier."
 
-        self.__n_fit_points = X.shape[0]
-        self.__n_features = X.shape[1]
+        self._n_fit_points = X.shape[0]
+        self._n_features = X.shape[1]
 
         # preparing one-hot encoding, by hand because that's what this is about
-        self.__sorted_levels = np.array(sorted(list(set(G))))
-        self.__n_levels = len(self.__sorted_levels)
-        G_one_hot = G[:, np.newaxis] == self.__sorted_levels[np.newaxis, :]
+        self._sorted_levels = np.array(sorted(list(set(G))))
+        self._n_levels = len(self._sorted_levels)
+        G_one_hot = G[:, np.newaxis] == self._sorted_levels[np.newaxis, :]
 
         self._train(X, G_one_hot)
 
@@ -71,7 +71,7 @@ class AbstractClassifier(object):
     def predict(self, X: np.ndarray) -> np.ndarray:
         """ Predicts the most likely category, returning an array of level labels."""
 
-        return self.__sorted_levels[self._predict_level_indices(X)]
+        return self._sorted_levels[self._predict_level_indices(X)]
 
     def _predict_level_indices(self, X: np.ndarray) -> np.ndarray:
         """ Predicts the most likely category, returning an array of level indices, sorted as per ``sorted_levels``."""
