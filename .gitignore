@@ -1,0 +1,15 @@
+# PyCharm artifacts
+
+**/.idea
+
+# Jupyter artifacts
+
+**/__pycache__
+**/.ipynb_checkpoints
+
+# LaTeX artifacts
+
+
+**/*.aux
+**/*.log
+**/*.synctex.gz
