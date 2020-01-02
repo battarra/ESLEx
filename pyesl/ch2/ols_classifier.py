@@ -1,30 +1,31 @@
 """ Reinvents the OLS classifier wheel for illustrative purposes."""
 
 import numpy as np
-from .abstract_classifier import AbstractClassifier
+from typing import List
+from .esl_classifier import EslClassifier
 
 
-class OLSClassifier(AbstractClassifier):
+class OLSClassifier(EslClassifier):
     """ Classifier based on OLS of one-hot class encodings."""
 
     def __init__(self):
 
         super(OLSClassifier, self).__init__()
 
-        self.__beta = None
+        self.__betas = None   # type: List[np.ndarray]
 
-    @property
-    def beta(self) -> np.ndarray:
-        """ Returns the 2D array of OLS coefficients, shape ``(1 + n_features, n_levels)``."""
+    def beta(self, i_lab: int) -> np.ndarray:
+        """ Returns the 2D array of OLS coefficients, shape ``(1 + n_features, n_levels)``, for one of the labels."""
 
-        return self.__beta
+        return self.__betas[i_lab]
 
-    def _train(self, X: np.ndarray, G_one_hot: np.ndarray) -> None:
+    def _fit(self, X: np.ndarray, G_one_hots: List[np.ndarray]) -> None:
         """ Trains the classifier.
 
         Args:
             X: numpy matrix of input features, dimensions ``(N, n_features)``.
-            G_one_hot: array of one-hot-encoded categorical values, dimensions ``(N, n_levels)``.
+            G_one_hots: list (one element per label) of 2d arrays of one-hot-encoded categorical values,
+                dimensions ``(N, n_levels)``.
         """
 
         # including the constant in the regression
@@ -35,13 +36,13 @@ class OLSClassifier(AbstractClassifier):
         cov = np.dot(Xo.T, Xo) / self._n_fit_points
         inv_cov = np.linalg.inv(cov)
 
-        self.__beta = np.dot(inv_cov, np.dot(Xo.T, G_one_hot))
+        self.__betas = [np.dot(inv_cov, np.dot(Xo.T, G_one_hot)) for G_one_hot in G_one_hots]
 
-    def _predict_level_indices(self, X: np.ndarray) -> np.ndarray:
-        """ Predicts the most likely category, returning an array of level indices, sorted as per ``sorted_levels``."""
+    def _predict_level_indices(self, X: np.ndarray, i_lab: int) -> np.ndarray:
+        """ Predicts the most likely levels, returning an array of level indices, for one of the labels."""
 
         Xo = np.ones((X.shape[0], self._n_features + 1))
         Xo[:, 1:] = X
-        Y = np.dot(Xo, self.__beta)
 
-        return np.argmax(Y, axis=1)[::1]
+        Y_hat = np.dot(Xo, self.__betas[i_lab])
+        return np.argmax(Y_hat, axis=1)

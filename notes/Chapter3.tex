@@ -36,7 +36,8 @@ F_{p} \equiv \frac{\textrm{RSS}_0 - \textrm{RSS}_1}{\textrm{RSS}_1 / (N - p - 1)
 \subsection*{Ex. 3.2 \seecode}
 The premise of the two confidence band estimates is that the posterior
 distribution of the true value $\beta$ given the data is that of a gaussian vector, 
-with center $\hat{\beta}$ and covariance $ \hat{\sigma}^2 \left( \mathbf{X} ^T \mathbf{X}  \right) ^{-1}$.
+with center $\hat{\beta}$ and covariance $ \hat{\sigma}^2 \left( \mathbf{X} ^T \mathbf{X}  \right) ^{-1}$. In the case described by the exercise $\mathbf{X}$
+is the matrix whose columns contains increasing powers of the samples of $X$.
 The two confidence bands are then obtained as follows:
 \begin{enumerate}
 \item Since $\beta^T x_0$ is also gaussian with mean $\hat{y}_0 \equiv \hat{\beta}^T x_0$ and variance $\hat{\sigma}^2\, x_0^T ( \mathbf{X} ^T \mathbf{X})^{-1} x_0$, we can define a confidence band for its value via:
@@ -168,7 +169,7 @@ This identity can be given a procedural interpretation via the Gram-Schmidt proc
 			\begin{eqnarray*}
 			\mathbf{x}_j & = & R_{1j} \mathbf{q}_1 + \ldots + R_{jj} \mathbf{q}_j
 			\end{eqnarray*}
-			where $\mathbf{q}_j$ satisfies $\langle \mathbf{q}_i, \mathbf{q}_j \rangle = \delta_ij$.
+			where $\mathbf{q}_j$ satisfies $\langle \mathbf{q}_i, \mathbf{q}_j \rangle = \delta_{ij}$.
 		\item Compute the regression coefficient $\hat{\beta}_j^q$ of $\mathbf{y}$ against $\mathbf{q}_j$
 			as $\langle \mathbf{q}_j, \mathbf{y} \rangle$. Notice that, the $\mathbf{q}_j$'s being orthogonal,
 			$\hat{\beta}_j^q$ is the coefficient of $\mathbf{q}_j$ in the regression of $\mathbf{y}$ against
@@ -254,38 +255,73 @@ show that upon integration:
 \end{eqnarray*}
 where $\mathbf{y}_c$ and $\mathbf{X}_c$ are the centered versions of $\mathbf{y}$ and $\mathbf{X}$.
 
-\subsection*{{\color{red}Ex. 3.8}}
+\subsection*{Ex. 3.8}}
 
-Let's denote $(\mathbf{q}_0, \mathbf{q}_1, \ldots, \mathbf{q}_p)$ the columns of $\mathbf{Q}$: the matrix $\mathbf{Q}_2$ contains the variables $\mathbf{q}_1, \ldots, \mathbf{q}_{p}$. By construction, these are orthogonal to the variable $\mathbf{q}_0$ which, considering that $(\mathbf{e}_{0})_i = 1$ and remembering
-the Gram-Schmidt procedure, has all elements equal to $1/\sqrt{N}$. This means that $\mathbf{e} \cdot \mathbf{q}_j \propto \langle \mathbf{q}_j, \mathbf{q}_1 \rangle  = 0$ for $j = 1, \ldots, p$, i.e. the variables $\mathbf{q}_j$ are demeaned. Also, since the $\mathbf{q}_j$ are mutually orthogonal by construction, we can
-obtain them by first demeaning the $\mathbf{x}_j$'s to obtain $\tilde{\mathbf{X}}$, then applying the Gram-Schmidt procedure to perform the remaining residualisations. This shows that $\mathbf{Q}_2$ is part
-of the QR decomposition of $\tilde{\mathbf{X}}$, and their columns span the same subspace. The latter
-is also equal to the subspace spanned by the columns of  $\mathbf{U}$ since $DV^T$ is a non-singular $p\times p$ matrix.
+We begin by proving that $\mathbf{Q}_2$ is the 'Q' matrix in
+the QR decomposition of $\tilde{\mathbf{X}}$.
+Denote $(\mathbf{q}_0 = \mathbf{e}, \mathbf{q}_1, \ldots, \mathbf{q}_p)$ the 
+columns of $\mathbf{Q}$, the matrix appearing in the QR decomposition $\mathbf{X}$. The matrix $\mathbf{Q}_2$ has columns $(\mathbf{q}_1, \ldots, 
+\mathbf{q}_{p})$. The centered matrix $\tilde{\mathbf{X}}$ can be written as:
 
-Coming to the second part of the question, we try to determine under which circumstances the set
-of columns of $\mathbf{Q}_2$ in $\tilde{\mathbf{X}} = \mathbf{Q}_2 R_2$ is equal, up to sign flips
-and regardless of the column sorting, to the set of columns of $\mathbf{U}$, the matrix appearing in
-the SVD decomposition $\tilde{\mathbf{X}} = \mathbf{U} D V^T$. We remember that, provided the
-eigenvalues of $\tilde{\mathbf{X}} ^T \tilde{\mathbf{X}}$ are unique, the SVD decomposition is unique,
-i.e. the set of columns of $\mathbf{U}$ is uniquely determined up to sign flips. Moreover, starting from
-a rotated version of the original predictors, and in particular shuffling them or flipping their sign, does not change this set of columns, since any such change can be re-absorbed in the matrix $V$. On the other
-hand, the QR decomposition depends explicitly on the initial order of predictors.
+\begin{equation}
+\tilde{\mathbf{X}} = \left(\mathbf{X} - \frac{1}{N} \mathbf{e}\, \mathbf{e}^T\mathbf{X}\right) E_{p+1, p}
+\end{equation}
+where $E_{p + 1, p}$ is the $(p + 1) \times p$ matrix containing
+an identity block starting at position $(1, 0)$, so as to remove
+the first column of the matrix on its left.
+Replacing the QR decomposition of $\mathbf{X}$ we get:
+\begin{equation}
+\tilde{\mathbf{X}} = \left(\mathbb{I}_{p+1, p + 1} - \frac{1}{N} \mathbf{e}\,\mathbf{e}^T\right) \mathbf{Q}\,R\, E_{p+1, p}
+\end{equation}
+Since $\mathbf{q}_0 = \mathbf{e}$ and the remaining columns of $\mathbf{q}$
+are orthogonal to $\mathbf{e}$ as per the Gram-Schmidt procedure, the first
+term on the r.h.s. has the effect of multiplying by zero the first column of
+$\mathbf{Q}$ while leaving the remaining columns $\mathbf{Q}_2$ untouched:
+\begin{equation}
+\tilde{\mathbf{X}} = \mathbf{Q}_2\, E_{p, p+1} \,R\, E_{p+1, p}
+\end{equation}
+where $E_{p, p+1}$ is the $p \times (p + 1)$ matrix containing an identity
+block starting at index $(0, 1)$. The matrix $E_{p, p+1} \,R\, E_{p+1, p}$
+is nothing but the $1$ to $p + 1$ submatrix of $R$, which is still upper diagonal.
+This proves that $\mathbf{Q}_2$ is the 'Q' matrix in the QR decomposition of
+$\tilde{\mathbf{X}}$.
 
-Remebering about how the columns of $\mathbf{Q}_2$ are obtained in the Gram-Schmidt procedure, one can conclude that the QR decomposition will result in the same set of vectors as the SVD decomposition if and only if:
-\begin{eqnarray} \label{3p8_e1}
-j = 1, \ldots, p:\quad \textrm{Span}(\mathbf{x}_1, \ldots, \mathbf{x}_j) = \textrm{Span}(\mathbf{u}_{\sigma(1)}, \ldots, \mathbf{u}_{\sigma(j)})
-\end{eqnarray}
-for some permutation $\sigma$ of $(1, \ldots, p)$. Indeed, the Gram-Schmidt procedure at step $j$ 
-sets $\mathbf{q}_j$ to be the normal to $\textrm{Span}(\mathbf{x}_1, \ldots, \mathbf{x}_{j - 1})$ in $\textrm{Span}(\mathbf{x}_1, \ldots, \mathbf{x}_{j})$, which is equal to $\mathbf{u}_{\sigma(j)}$ up to
-a sign when (\ref{3p8_e1}). The converse is obviously true, since the QR decomposition is such that
-$\textrm{Span}(\mathbf{x}_1, \ldots, \mathbf{x}_j) = \textrm{Span}(\mathbf{q}_1, \ldots, \mathbf{q}_j)$ for 
-every $j$. The condition (\ref{3p8_e1}) can be written as:
+Let now $\tilde{\mathbf{X}} = UDV^T$. Since $DV^T$ is a non-singular $p \times p$
+matrix, the columns of $U$ must span the same subspace as the columns of both
+$\tilde{\mathbf{X}}$ and $\mathbf{Q}_2$. From now on we can drop both the tildes
+and the subscript, since both the QR and SVD decompositions are performed
+on the centered matrix.
+
+For the second part of the question we note that, if the columns of 
+$\mathbf{X}$ are mutually orthogonal, the QR decomposition is also
+an SVD decomposition, because the $R$ matrix can be taken to be diagonal:
+
 \begin{eqnarray*}
-\tilde{\mathbf{X}}= \mathbf{U} D V^T = \mathbf{U} S_\sigma A
+    \mathbf{X} & = & \mathbf{Q} D \\
+    D_{kk} & = & ||\mathbf{x}_k|| \\
+    \mathbf{Q}^T \mathbf{Q} & = & \mathbb{I}_p
 \end{eqnarray*}
-where $S_\sigma$ is a shuffling matrix, and $A$ is an upper-triangular matrix. A particularly simple case
-is $V^T$, i.e. when the columns of $\tilde{\mathbf{X}}$ are orthogonal: the two decompositions give the 
-same result since one can take $S_\sigma = \mathbb{I}$, $A = D$.
+Since the SVD is unique\footnote{Here we suppose that the eigenvalues of
+the sample covariance matrix are all distinct.} up to shuffling and sign flip
+of the columns of $\mathbf{U}$, the matrix $\mathbf{Q}$ can be obtained from
+any of the versions of $\mathbf{U}$ using such operations. One can in fact show that 
+this is the only case in which the columns of $\mathbf{Q}$
+coincide those of $\mathbf{U}$. Suppose that:
+\begin{equation*}
+\mathbf{Q} = \mathbf{U}
+\end{equation*}
+By comparing the two decompositions one can easily show that:
+\begin{equation*}
+V = D^{-1} R
+\end{equation*}
+This equality requires $V$ to be upper-diagonal besides being orthogonal. This
+implies\footnote{Any upper-diagonal orthogonal matrix $V$ is necessarily diagonal. To
+show this, one can prove that $V^{-1}$ is also upper-diagonal and, being
+equal to the transpose $V^T$, $V$ must be diagonal.} that $V$ is a diagonal, idempotent matrix, and:
+\begin{equation*}
+\mathbf{X}^T \mathbf{X} = V^T D ^2 V
+\end{equation*}
+is also diagonal, proving that the columns of $\mathbf{X}$ are mutually orthogonal.
 
 \subsection*{Ex. 3.9}
 If we add a new predictor $\mathbf{z}$ to the fit, the residual-sum-of squares changes by:
