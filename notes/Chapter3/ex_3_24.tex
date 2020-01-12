@@ -1,3 +1,19 @@
 %!TEX root = ../Tibt.tex
 
 \exercise{3.24}
+
+By definition, all predictors in LAR are normalised and all predictors
+that are active at step $k$ have the same covariance with the
+current residuals:
+$$
+\frac{1}{N}|\mathbf{X}_{\mathcal{A}_k}^T \mathbf{r}_k| = \lambda\, e
+$$
+The cosine of the angles between the LAR direction $\mathbf{u_k}$
+and the active predictors is proportional to their scalar products:
+\begin{eqnarray*}
+    \mathbf{X}_{\mathcal{A}_k}^T \mathbf{u}_k  = 
+    \mathbf{X}_{\mathcal{A}_k}^T \mathbf{X}_{\mathcal{A}_k} \delta_k =  \mathbf{X}_{\mathcal{A}_k}^T \mathbf{X}_{\mathcal{A}_k} 
+    (\mathbf{X}_{\mathcal{A}_k}^T \mathbf{X}_{\mathcal{A}_k} )^{-1}
+    \mathbf{X}_{\mathcal{A}_k}^T \mathbf{r}_k = 
+    \mathbf{X}_{\mathcal{A}_k}^T \mathbf{r}_k = N \lambda \, e.
+\end{eqnarray*}

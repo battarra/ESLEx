@@ -1,3 +1,37 @@
 %!TEX root = ../Tibt.tex
 
 \exercise{3.25}
+
+Denote $\lambda$ the scalar product between the active set predictors
+and the residuals at the beginning of step $k$:
+$$
+\frac{1}{N}|\mathbf{X}_{\mathcal{A}_k}^T \mathbf{r}_k| = \lambda\, e
+$$
+This quantity decreases linearly along the LAR segment (see
+Ex. 3.23):
+\begin{eqnarray*}
+    \mathbf{r}_k & \rightarrow & \mathbf{r}_k -  \alpha 
+        \mathbf{X}_{\mathcal{A}_k} \delta_k \\
+    \frac{1}{N}|\mathbf{X}_{\mathcal{A}_k}^T \mathbf{r}_k| 
+        & \rightarrow &  (1 - \alpha) \lambda \,e
+\end{eqnarray*}
+Denote $\mathcal{I}_k$ the set of predictors that are \textit{inactive}
+at step $k$. The LAR segment ends when the absolute correlation
+of one of these predictors with the residuals matches that of
+the active predictors. The norm of the residuals is immaterial
+because it affects all correlations as a common multiplicative
+factor, so we can just compute:
+\begin{eqnarray*}
+    \frac{1}{N} | \mathbf{X}_{\mathcal{I}_k}^T \mathbf{r}_k |
+        & \rightarrow & \frac{1}{N} | \mathbf{X}_{\mathcal{I}_k}^T \left(\mathbf{r}_k - \alpha \mathbf{X}_{\mathcal{A}_k} \delta_k\right) | \\
+        & = & | \lambda_{\mathcal{I}, k}  - \alpha \lambda'_{\mathcal{I}, k}|\\
+    \lambda_{\mathcal{I}, k} & = & \frac{1}{N}\mathbf{X}_{\mathcal{I}_k}^T \mathbf{r}_k\\
+    \lambda'_{\mathcal{I}, k} & = & \frac{1}{N}\mathbf{X}_{\mathcal{I}_k}^T 
+    \mathbf{X}_{\mathcal{A}_k} \delta_k
+\end{eqnarray*}
+The crossing points $\alpha^\star$ are therefore determined by:
+\begin{equation*}
+| \lambda_{\mathcal{I}, k}  - \alpha^\star \lambda'_{\mathcal{I}, k}| = 
+(1 - \alpha^\star) \lambda \,e
+\end{equation*}
+and the LAR segments ends at the smallest of the values of $\alpha^\star$.

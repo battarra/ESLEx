@@ -1,3 +1,49 @@
 %!TEX root = ../Tibt.tex
 
 \exercise{3.23}
+
+The initial assumption can be re-written as:
+\begin{equation}
+\frac{1}{N} \left| \mathbf{X}^T \mathbf{y}\right| = \lambda\,e_p
+\end{equation}
+Denote $\hat{\mathbf{y}} \equiv X \hat{\beta}$. In the following,
+we will make use of the following identity:
+\begin{equation}\label{eq:3p23_1}
+\mathbf{X}^T \left(\mathbf{y} - \hat{\mathbf{y}}\right) = 0
+\end{equation}
+which tells us that the OLS estimate $\hat{\mathbf{y}}$ is the
+orthogonal projection of $\mathbf{y}$ onto the subspace generated
+by the columns of $\mathbf{X}$. \eqref{eq:3p23_1} also implies:
+\begin{equation}\label{eq:3p23_2}
+\hat{\mathbf{y}}^T \left(\mathbf{y} - \hat{\mathbf{y}}\right) = 0
+\end{equation}
+Using \eqref{eq:3p23_1}:
+\begin{eqnarray*} \label{eq:3p23_3}
+    \frac{1}{N} \left|\mathbf{X}^T \left(\mathbf{y} - \alpha \hat{\mathbf{y}}\right)\right| = 
+    \frac{1}{N} \left|(1 - \alpha) \mathbf{X}^T \mathbf{y}\right| = 
+    (1 - \alpha) \lambda\, e_p
+\end{eqnarray*}
+which proves (a). Moreover:
+\begin{eqnarray*}
+    RSS & \equiv & || \mathbf{y} - \hat{\mathbf{y}} ||^2 \\
+      & = & ||\mathbf{y}||^2 - 2 \mathbf{y}^T \hat{\mathbf{y}} + 
+        ||\hat{\mathbf{y}}||^2 \\
+    & = & N - \mathbf{y}^T \hat{\mathbf{y}}
+\end{eqnarray*}
+In the last step, we made use of \eqref{eq:3p23_2}. Hence:
+\begin{eqnarray*}
+    ||\mathbf{y} - \alpha \hat{\mathbf{y}}||^2 & = & 
+        N - 2 \alpha\,\mathbf{y}^T \hat{\mathbf{y}} + \alpha^2 ||\hat{\mathbf{y}}||^2 \\
+        & = & N - \alpha \left(2 - \alpha\right) \mathbf{y}^T \hat{\mathbf{y}} \\
+        & = & N \left(1 - \alpha(2 - \alpha)\right) + \alpha(2 - \alpha)\, RSS \\
+        & = & N\, (1 - \alpha)^2 + \alpha(2 - \alpha) RSS
+\end{eqnarray*}
+This result can be combined with the expression \eqref{eq:3p23_3}
+of the absolute covariance to give (b). As for (c), LAR segments
+are indeed of the form 
+$ \mathbf{y} \rightarrow \mathbf{y} - \alpha \hat{\mathbf{y}}$
+where $\mathbf{y} = \mathbf{r}_k$ are the residuals at beginning of the 
+segment, and the regression is performed w.r.t. the set of active 
+predictors, which all have the same absolute covariance with $\mathbf{r}_k$ just like in the exercise.
+
+

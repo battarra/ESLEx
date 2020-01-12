@@ -46,7 +46,7 @@ orthogonal:
     \mathbf{z}_m^T \, \mathbf{z}_n & = & 0 \;\; \forall\; n \neq m\\
     P_m \, P_n & = & 0  \;\; \forall\; n \neq m    
 \end{eqnarray*}
-The recurrence in Eq. \ref{eq:3p18_recX} can therefore be 'unrolled' as:
+The recurrence in \eqref{eq:3p18_recX} can therefore be 'unrolled' as:
 
 \begin{equation}
 \mathbf{X}^{(m)} = \left(1 - P_1 - \ldots - P_m\right) \mathbf{X}
@@ -59,7 +59,7 @@ all $\mathbf{X}^{(m)}$'s are linear combinations of the original $\mathbf{X}$, t
 \begin{equation}
 \hat{\mathbf{y}}_m = \mathbf{X}\beta_m
 \end{equation}
-for some vector $\beta_m$. If we compare with Eq. \ref{eq:3p18_recy},
+for some vector $\beta_m$. If we compare with \eqref{eq:3p18_recy},
 we see that:
 \begin{equation*}
 \hat{\mathbf{y}}_m - \hat{\mathbf{y}}_{m - 1} = 
@@ -115,7 +115,7 @@ in such a way that the $p_m$ are all mutually \textit{conjugate}:
 \begin{equation*}
 p_m^T G\,p_n = 0 \quad \forall \; m \neq n
 \end{equation*}
-The fact that the second term in Eq. \ref{eq:3p18_3} is 
+The fact that the second term in \eqref{eq:3p18_3} is 
 sufficient to guarantee orthogonality is not trivial,
 see \cite{Murray1982}, Section 4.8.3. Thanks to conjugacy,
 the update $x_m \rightarrow x_{m + 1}$ consists in moving $x$
@@ -136,7 +136,7 @@ $\beta$, with initial condition $\beta_0 = 0$:
     c^T & = & - \mathbf{y}^T \mathbf{X} \\
     G & = & \mathbf{X}^T \mathbf{X}
 \end{eqnarray*}
-The update directions are specified by Eq. \ref{eq:e3p18_p}:
+The update directions are specified by \eqref{eq:e3p18_p}:
 \begin{equation*}
 \mathbf{X} p_m  =  \mathbf{z}_{m + 1} = \mathbf{X}_m \mathbf{X}_m^T \mathbf{y}
 \end{equation*}
@@ -147,7 +147,7 @@ p_m \, G \, p_n = p_m \mathbf{X}^T \mathbf{X} \, p_n =
 \end{equation}
 Moreover, the coefficient of the $\mathbf{z}_m$ term at iteration $m$ of PLS
 is the result of a least squares regression of $\mathbf{y}$ against
-$\mathbf{z}_m$ itself, which is the equivalent of Eq. \ref{eq:e3p18_update}.
+$\mathbf{z}_m$ itself, which is the equivalent of \eqref{eq:e3p18_update}.
 
 To complete the connection, we show that 
 $$p_m = -g(\beta_m) + p_{m, \parallel}$$
@@ -166,7 +166,7 @@ Remember that:
     - \mathbf{z}_1 \frac{\mathbf{z}_1^T \mathbf{X}}{||\mathbf{z}_1||^2} - \ldots
     - \mathbf{z}_m \frac{\mathbf{z}_m^T \mathbf{X}}{||\mathbf{z}_m||^2}
 \end{equation}
-Plugging in the previous equation in Eq. \ref{eq:e3p18_passage} we obtain:
+Plugging in the previous equation in \eqref{eq:e3p18_passage} we obtain:
 \begin{eqnarray*}
     - \mathbf{X} g(\beta_m) & = & \mathbf{X}_m \mathbf{X}_m^T\, \mathbf{y} + 
         c_1\, \mathbf{z_1} + \ldots + c_m\, \mathbf{z}_m \\
