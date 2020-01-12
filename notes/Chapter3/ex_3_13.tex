@@ -1,0 +1,21 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{3.13}
+
+
+After centering predictors, the PCR fitted function is:
+\begin{eqnarray*}
+    \hat{f}(x) = \bar{y} +\sum_{m=1}^M \hat{\theta}_m \, z_m = \bar{y} + \sum_{m=1}^M \hat{\theta}_m \, (x \cdot v_m) = \bar{y} + \left( \sum_{m=1}^M \hat{\theta}_m \, v_m\right) \cdot x = \bar{y} + \hat{\beta}^{pcr} \cdot x
+\end{eqnarray*} 
+which proves the first point.
+
+The proof of the second point follows from the fact that the span of the $\mathbf{x}$'s is equal to
+the span of all the $\mathbf{z}$'s. Remembering that $\mathbf{X} = \mathbf{Z}V^T$ where $\mathbf{z}_m$ are the columns of $\mathbf{Z}$ and $V$ is orthogonal:
+\begin{eqnarray*}
+    \hat{\beta}^{ls}  =  \left( \mathbf{X}^T \mathbf{X} \right)^{-1} \mathbf{X}^T \mathbf{y} =
+    V \left( \mathbf{Z}^T \mathbf{Z} \right)^{-1} \mathbf{Z}^T \mathbf{y}
+\end{eqnarray*}
+Since the columns of $\mathbf{Z}$ are orthogonal, this reads:
+\begin{eqnarray*}
+    \hat{\beta}^{ls} & = & \sum_{m=1}^{p} \frac{\langle \mathbf{z}_m, \mathbf{y} \rangle}{\langle \mathbf{z}_m, \mathbf{z_m} \rangle} \, v_m = \hat{\beta}^{pcr}(p)
+\end{eqnarray*}

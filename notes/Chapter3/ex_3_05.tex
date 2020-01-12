@@ -1,0 +1,19 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{3.5}
+
+One has:
+\begin{eqnarray*}
+    \beta_0 + \sum_j x_{ij} \beta_j & = & \beta_0^c + \sum_j (x_{ij} - \bar{x}_j) \beta_j \\
+    \beta_0^c & \equiv & \beta_0 + \sum_j \bar{x}_j \beta_j
+\end{eqnarray*}
+Since $\beta_0$ is a dummy variable in the OLS minimization, we can use $\beta_0^c$ instead,
+which proves the equivalence and provides the relationship between $\beta$ and $\beta^c$:
+\begin{eqnarray*}
+    \beta_0^c & = & \beta_0 + \sum_j \bar{x}_j \beta_j \\
+    \beta_j^c & = & \beta_j, \quad j = 1, \ldots, p
+\end{eqnarray*}
+
+As a side note, this shows that as long as we include the constant in a Ridge regression,
+we should not worry about the remaining predictors being centered: their average
+can be absorbed in the coefficient of the constant which is not penalized.

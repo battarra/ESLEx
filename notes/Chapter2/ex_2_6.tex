@@ -1,0 +1,13 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{2.6}
+
+One has:
+$$
+\sum_{i:\, x_i = x} \left(y_i - f_\theta(x_i) \right)^2 = n_x \left(\bar{y}_x - 
+f_\theta(x)\right)^2 + \sum_{i:\, x_i = x} \left(y_i - \bar{y}_x \right)^2
+$$
+where $n_x \equiv \sum_{i:\, x_i = x} 1$ and $\bar{y}_x \equiv n_x^{-1} \sum_{i:\, x_i = 
+    x} y_i$. The second term does not contribute to the regression since it does not depend 
+on $f_\theta$, so we can just fit using the average $\bar{y}_x$ as response and weights 
+proportional to $n_x$.

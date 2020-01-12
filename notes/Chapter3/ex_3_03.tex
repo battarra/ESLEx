@@ -1,0 +1,35 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{3.3}
+
+Any linear, unbiased estimate $c^T Y$ of $a^T \beta$ can be written as the OLS estimator
+plus an additional linear estimate with zero expectation:
+\begin{eqnarray*}
+    && c^T Y \equiv  a^T \hat{\beta} + b^T Y = \left( a^T \left( \mathbf{X}^T \mathbf{X} \right)^{-1} \mathbf{X}^T + b^T \right) Y \\
+    && \mathbb{E} \left[ b^T Y \right] = b^T \mathbf{X} \beta = 0
+\end{eqnarray*}
+Since the second equation must hold for any $\beta$, we conclude $ b^T \mathbf{X} = 0$. This implies that
+the two terms in:
+\begin{eqnarray*}
+    c = \mathbf{X} \left( \mathbf{X} ^T \mathbf{X}  \right)^{-1} a + b
+\end{eqnarray*}
+are orthogonal vectors. Hence, the variance:
+\begin{eqnarray*}
+    \textrm{Var} \left( c^T Y \right) & = & \sigma^2 ||c||^2
+\end{eqnarray*}
+is minimized for $b=0$, i.e. when $c^T Y = a^T \hat{\beta}$.
+
+Similarly, any linear unbiased estimate $C^T Y$ of the $\beta$ vector can be written as:
+\begin{eqnarray} \nonumber
+C^T Y & = & \left( \left( \mathbf{X}^T \mathbf{X} \right)^{-1} \mathbf{X} ^T + B^T \right) Y \equiv \left(  \hat{B} + B \right)^T Y\\ \label{3p3_e1}
+B^T \mathbf{X} & = & 0 \quad \Longrightarrow \quad B^T \hat{B} = 0
+\end{eqnarray}
+Its variance-covariance matrix is:
+\begin{eqnarray*}
+    \textrm{Cov}(C^T Y)  =  C^T C = \hat{B}^T \hat{B} + B^T B
+\end{eqnarray*}
+where the last equality follows from (\ref{3p3_e1}). Since $B^T B$ is positive semi-definite,
+this proves that:
+\begin{eqnarray*}
+    \textrm{Cov}(\hat{\beta}) = \hat{B}^T \hat{B} \lesssim \textrm{Cov}(C^T Y)
+\end{eqnarray*}

@@ -1,0 +1,23 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{3.6}
+
+From Bayes theorem:
+\begin{eqnarray*}
+    P_{posterior}(\beta | \mathbf{y}) \propto P(\mathbf{y} | \beta) \, P_{prior}(\beta)
+\end{eqnarray*}
+The proportionality factor only depends on $\mathbf{y}$ and is fixed by the normalization of
+the posterior distribution. Assuming\footnote{The text exercise uses $\tau$ instead of $\tau^2$. This 
+    seems inconsistent with the next exercise and with the convention for variances, so we use $\tau^2$ instead.}:
+\begin{eqnarray*}
+    l_{prior}(\beta) & \equiv & \log{P_{prior}(\beta)} = c_1 - \frac{1}{2 \tau ^2} \beta^T \beta\\
+    \log{P(\mathbf{y} | \beta)} & = & c_2 - \frac{1}{2 \sigma^2} \left( \mathbf{y} - \mathbf{X} \beta \right)^T \left( \mathbf{y} - \mathbf{X} \beta \right) 
+\end{eqnarray*}
+we get:
+\begin{eqnarray} \label{3p6_e1}
+l_{posterior}(\beta | \mathbf{y}) & = & c_3 - \frac{1}{2 \tau^2} \beta^T \beta - \frac{1}{2 \sigma^2} \left( \mathbf{y} - \mathbf{X} \beta \right)^T \left( \mathbf{y} - \mathbf{X} \beta \right) \\ \nonumber
+& = & c(\mathbf{y}) - \frac{1}{2} \left( \beta - \hat{\beta} \right) ^T \left( \frac{\mathbf{X} ^T \mathbf{X} }{ \sigma ^2} + \frac{1}{\tau^2} \right) \left( \beta - \hat{\beta} \right) \\ \nonumber
+\hat{\beta} & = & \left( \mathbf{X} ^T \mathbf{X} + \frac{\sigma^2}{ \tau^2} \right)^{-1} \mathbf{X}^T \mathbf{y}
+\end{eqnarray}
+This shows that the posterior distribution of $\beta$ is gaussian, with center given by the Ridge estimate
+with parameter $\lambda = \sigma^2 / \tau^2$.

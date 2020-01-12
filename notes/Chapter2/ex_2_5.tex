@@ -1,0 +1,88 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{2.5}
+
+The random variables $y_0$ and $\hat{y}_0$ are independent, hence:
+\begin{eqnarray*}
+    \textrm{EPE}(x_0) & \equiv & \mathbb{E}_{\mathcal{T}, y_0|x_0} \left[ (y_0 - \hat{y}_0)^2 \right] = \left( \mathbb{E}_{\mathcal{T}, y_0|x_0} \left[ y_0 - \hat{y}_0 \right] \right) ^2 + \textrm{Var}_{\mathcal{T}, y_0|x_0} \left( y_0 - \hat{y}_0 \right) \\
+    & = & \left( \mathbb{E}_{y_0 | x_0}\left[y_0\right] - \mathbb{E}_{\mathcal{T}}\left[\hat{y}_0 \right] \right)^2 + \textrm{Var}_{y_0 | x_0} (y_0) + \textrm{Var}_{\mathcal{T}}(\hat{y}_0) 
+\end{eqnarray*}
+We obtain the decomposition of expected prediction error as a sum of irreducible variance, squared bias and estimation variance:
+\begin{eqnarray}
+\textrm{EPE}(x_0) & = & \textrm{Var}_{y_0 | x_0} (y_0) + \textrm{Bias}_{\mathcal{T}, y_0 | x_0}^2(y_0) + \textrm{Var}_\mathcal{T}(\hat{y}_0)\\
+\textrm{Var}_{y_0 | x_0} (y_0) & \equiv & \mathbb{E}_{y_0 | x_0}\left[\left(y_0 - \mathbb{E}_{y_0 | x_0}\left[y_0\right]\right)^2 \right]\\
+\textrm{Bias}_{\mathcal{T}, y_0 | x_0}(y_0) & \equiv & \mathbb{E}_{y_0 | x_0}\left[y_0\right] - \mathbb{E}_{\mathcal{T}}\left[\hat{y}_0 \right] \\
+\textrm{Var}_\mathcal{T}(\hat{y}_0) & \equiv & \mathbb{E}_{\mathcal{T}}\left[\left(\mathbb{E}_{\mathcal{T}}\left[\hat{y}_0 \right] - \hat{y}_0 \right)^2 \right]
+\end{eqnarray}
+Equation (2.27) was obtained under two assumptions:
+\begin{itemize}
+    \item the underlying distribution for $Y$ conditional on $X$ is:
+    $$
+    y = \beta ^T X + \epsilon, \quad \epsilon \sim \mathcal{N}(0, \sigma^2)
+    $$
+    from which it follows that:
+    \begin{eqnarray*}
+        \mathbb{E}_{y_0 | x_0}\left[y_0\right] & = & \beta ^T x_0\\
+        \textrm{Var}_{y_0 | x_0} (y_0) & = & \sigma^2
+    \end{eqnarray*}
+    \item $\hat{y}_0$ is an OLS estimate of $Y$ at $X = x_0$:
+    $$
+    \hat{y}_0 = x_0 ^T \left(\mathbf{X}^T \mathbf{X} \right)^{-1} \mathbf{X}^T \left(\mathbf{X} \beta + \bm{\epsilon}\right) = x_0 ^T \beta + x_0^T \left(\mathbf{X}^T \mathbf{X} \right)^{-1} \mathbf{X}^T \bm{\epsilon}
+    $$
+\end{itemize}
+By assumption $\epsilon$ and $X$ are independent random variables. Hence, denoting $p_X \equiv \mathbf{X} \left( \mathbf{X}^T \mathbf{X} \right)^{-1} x_0$ such that $\hat{y}_0 = x_0^T \beta + p_X^T \bm{\epsilon}$, one has:
+\begin{eqnarray*}
+    \mathbb{E}_{\mathcal{T}} \left[ p_X^T\, \epsilon\right] & = & \mathbb{E}_\mathbf{X}
+    \left[p_X^T\right]\, \mathbb{E}_\epsilon \left[\bm{\epsilon}\right] \\
+    \mathbb{E}_{\mathcal{T}}\left[\hat{y}_0 \right] & = & x_0 ^T \beta\\
+    \textrm{Var}_\mathcal{T}(\hat{y}_0) & = & \mathbb{E}_{\mathcal{T}}\left[ (p_X^T \bm{\epsilon})^2\right] = \mathbb{E} _\mathcal{T}\left[p_X^T \bm{\epsilon} \, \bm{\epsilon}^T p_X \right] = \mathbb{E} _\mathcal{T}\left[\textrm{Tr} \left(p_X^T \bm{\epsilon} \, \bm{\epsilon}^T p_X \right)\right]\\
+    & = & \mathbb{E} _\mathcal{T}\left[\textrm{Tr} \left(p_X\, p_X^T \bm{\epsilon} \, \bm{\epsilon}^T \right)\right] \\
+    & = & \textrm{Tr} \left(	
+    \mathbb{E}_\mathbf{X} \left[ p_X p_X^T \right] \mathbb{E}_{\bm{\epsilon}} \left[\bm{\epsilon} \bm{\epsilon}^T \right]\right) = \sigma ^2 \mathbb{E}_\mathbf{X} \left[x_0^T (\mathbf{X}^T \mathbf{X})^{-1} x_0 \right]
+\end{eqnarray*}
+The last equality follows from the cyclicity and linearity of trace. Using 
+$\mathbb{E}_{\bm{\epsilon}} \left[\bm{\epsilon} \bm{\epsilon}^T \right] = \sigma^2$ one
+has:
+\begin{eqnarray*}
+    \textrm{Var}_\mathcal{T}(\hat{y}_0) & = & \sigma^2 \,\textrm{Tr} \left(	
+    \mathbb{E}_\mathbf{X} \left[ p_X p_X^T \right] \right) \\
+    & = & \sigma^2 \, \mathbb{E}_\mathbf{X} \left[ \textrm{Tr}\left(p_X p_X^T \right)\right] 
+    = \sigma^2 \, \mathbb{E}_\mathbf{X} \left[ ||p_X||^2 \right]\\
+    & = & \sigma ^2 \mathbb{E}_\mathbf{X} \left[x_0^T (\mathbf{X}^T \mathbf{X})^{-1} x_0 
+    \right]
+\end{eqnarray*}
+Putting everything together:
+\begin{eqnarray*}
+    \textrm{Var}_{y_0 | x_0} (y_0) & = & \sigma^2\\
+    \textrm{Bias}_{\mathcal{T}, y_0 | x_0}(y_0) & = & 0\\
+    \textrm{Var}_\mathcal{T}(\hat{y}_0) & = & \sigma ^2\, \mathbb{E}_\mathbf{X} \left[x_0^T 
+    (\mathbf{X}^T \mathbf{X})^{-1} x_0 \right]\\
+    \textrm{EPE}(x_0) & = & \sigma^2\, \left( 1 + \mathbb{E}_\mathbf{X} \left[x_0^T 
+    (\mathbf{X}^T \mathbf{X})^{-1} x_0 \right] \right)
+\end{eqnarray*} 
+which proves Eq. (2.27).
+
+To prove Eq. (2.28) under the specified assumption:
+$$
+(\mathbf{X}^T \mathbf{X})^{-1} \rightarrow N^{-1} \textrm{Cov}^{-1}(X) \quad \textrm{as} \; N \rightarrow \infty
+$$
+requires a simple manipulation involving the cyclicity and linearity of the trace operation, as well as the independence of $\mathbf{X}$ and $x_0$:
+\begin{eqnarray*}
+    \mathbb{E}_{x_0} \left[EPE(x_0) \right] & = &\sigma^2 \left(1 + \mathbb{E}_{x_0, 
+        \mathbf{X}} \left[x_0^T (\mathbf{X}^T \mathbf{X})^{-1} x_0\right] \right) \\
+    & = &\sigma^2 \left(1 + \mathbb{E}_{x_0, \mathbf{X}} \left[\textrm{Tr}\left(x_0^T 
+    (\mathbf{X}^T \mathbf{X})^{-1} x_0 \right)\right] \right) \\
+    & = &\sigma^2 \left(1 + \mathbb{E}_{x_0, \mathbf{X}} \left[\textrm{Tr}\left(x_0 x_0^T 
+    (\mathbf{X}^T \mathbf{X})^{-1} \right)\right] \right)\\
+    & = &\sigma^2 \left(1 + \textrm{Tr}\left(\mathbb{E}_{x_0, \mathbf{X}} \left[x_0 x_0^T 
+    (\mathbf{X}^T \mathbf{X})^{-1} \right]\right) \right)\\
+    & = &\sigma^2 \left(1 + \textrm{Tr}\left(\mathbb{E}_{x_0} \left[x_0 x_0^T \right] 
+    \mathbb{E}_{\mathbf{X}}\left[ (\mathbf{X}^T \mathbf{X})^{-1} \right]\right) \right)\\
+    & = &\sigma^2 \left(1 + \textrm{Tr}\left(\textrm{Cov}(x_0)\, 
+    \mathbb{E}_{\mathbf{X}}\left[ (\mathbf{X}^T \mathbf{X})^{-1} \right]\right) \right)\\
+    & \rightarrow &\sigma^2 \left(1 + \frac{1}{N} \textrm{Tr}\left(\textrm{Cov}(x_0)\, 
+    \textrm{Cov}^{-1}(X)\right) \right)\\
+    & = & \sigma^2 \left(1 + \frac{p}{N} \right)
+\end{eqnarray*}
+The last equality follows from the fact that $x_0$ is drawn from the same distribution 
+as $X$. 

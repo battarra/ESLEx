@@ -1,0 +1,27 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{2.2}
+
+This assignment is slightly ambiguous, since the  we are told that the 100 examples 
+are generated for each class but the \textit{a priori} probabilities $P(Y = \pm 1)$
+are not specified. We interpret the exercise as $P(Y = \pm 1) = 1/2$, and obtain the 
+probability distribution:
+\begin{eqnarray}
+P(Y = \pm 1) & = & \frac{1}{2} \\
+P(x | Y = \pm 1) & = & \frac{1}{10} \sum_{k=1}^{10} \mathcal{N}(x ; m_k ^{\pm}, \mathbb{I} / 5)
+\end{eqnarray}
+The decision boundary is the set points $x$ for which:
+\begin{eqnarray}
+P(Y = +1 |X = x) = P(Y = -1| X = x)
+\end{eqnarray}
+From Bayes theorem and the fact that $P(Y = +1) = P(Y =-1)$, this is equivalent to:
+\begin{eqnarray}
+p(x|Y = +1) = p(x|Y = -1)
+\end{eqnarray}
+which upon simplification reads:
+\begin{eqnarray}
+\sum_{k=1}^{10} \exp \left( 5\,m_k ^{+ T} x - \frac{5}{2} m_k ^{+ T} m_k^+ \right) = 
+\sum_{k=1}^{10} \exp \left( 5\,m_k ^{- T} x - \frac{5}{2} m_k ^{- T} m_k^- \right)
+\end{eqnarray}
+Note how with one gaussian per class instead of 10 the decision boundary becomes 
+linear (LDA).

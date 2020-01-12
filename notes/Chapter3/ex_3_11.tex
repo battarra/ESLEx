@@ -1,0 +1,35 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{3.11}
+
+
+Note that:
+\begin{eqnarray*}
+    \textrm{RSS}(B) = \textrm{Tr} \left(\Sigma^{-1} \left( \mathbf{Y} - \mathbf{X} B \right)^T \left( \mathbf{Y} - \mathbf{X} B \right)\right)
+\end{eqnarray*}
+When the matrix $\Sigma$ is diagonal, this is a sum of $K$ independent RSS's, and the solution for
+$B$ is indeed:
+\begin{eqnarray} \label{3p11_e0}
+B = \left( \mathbf{X} ^T \mathbf{X} \right)^{-1} \mathbf{X} \mathbf{Y}
+\end{eqnarray}
+More generally, since $\mathbf{\Sigma}$ is symmetric and positive definite, it admits a square root $S$, which allows us to fall back on the diagonal case:
+\begin{eqnarray*}
+    \textrm{RSS}(B) & = & \textrm{Tr} \left(\left( \mathbf{\hat{Y}} - \mathbf{X} \hat{B} \right)^T \left( \mathbf{\hat{Y}} - \mathbf{X} \hat{B} \right)\right)\\
+    \mathbf{\hat{Y}} & \equiv &\mathbf{Y}\,S\\
+    \hat{B} & \equiv & B\, S
+\end{eqnarray*}
+Hence the OLS solution is given by:
+\begin{eqnarray*}
+    B = \hat{B}\, S^{-1} = \left( \mathbf{X} ^T \mathbf{X} \right)^{-1} \mathbf{X} \hat{\mathbf{Y}} \, S^{-1} = \left( \mathbf{X} ^T \mathbf{X} \right)^{-1} \mathbf{X} \mathbf{Y}
+\end{eqnarray*}
+
+When the matrix $\Sigma$ varies from instance to instance, the value of $B$ which minimizes $\textrm{RSS}$
+is no longer given by a simple formula like (\ref{3p11_e0}). However, $\textrm{RSS}$ is still a quadratic
+form in $B$, seen as a vector in $\mathbb{R}^{p \times K}$. So, the equation which determines $B$ 
+can be shown to be an affine equation:
+\begin{eqnarray*}
+    && \sum_{(k, b)} L_{(j, a), (k, b)} \, B_{(k, b)} - C_{j, a} = 0\\
+    && L_{(j, a), (k, b)} = \sum_i \Sigma^{-1}_{i, ab} \, X_{ij}\, X_{ik}\\
+    && C_{j, a} = \sum_{i, b} \Sigma^{-1}_{i, ab} \, X_{ij} Y_{ib}
+\end{eqnarray*}
+This can be solved using standard linear system methods.

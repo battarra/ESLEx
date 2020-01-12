@@ -1,0 +1,55 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{2.7}
+
+\subsubsection*{Point (a)}
+
+One has:
+\begin{eqnarray*}
+    \textrm{linear regression:} \quad && \hat{f}(x_0) = x_0^T \hat{\beta} = x_0^T (\mathbf{X} ^{T} \mathbf{X}) ^{-1} \mathbf{X} ^{T} Y \\
+    && l_i(x_0, \mathcal{X}) = \left( \mathbf{X} (\mathbf{X} ^{T}\mathbf{X}) ^{-1} x_0\right)_i \\
+    \textrm{k-nn:} \quad && l_i(x_0, \mathcal{X}) = \frac{1}{k}\, \mathbf{I} \left( x_i \textrm{ is among the } k \textrm{ closest neighbors of } x_0 \right)
+\end{eqnarray*}
+
+\subsubsection*{Point (b)}
+
+Notice that:
+\begin{eqnarray*}
+    \mathbb{E}_{\mathcal{Y}|\mathcal{X}} \left[ \hat{f}(x_0) \right] & = & \bm{l}^{T}(x_0; \mathcal{X})\,\bm{f}(X),\\
+    \textrm{Var}_{\mathcal{Y}|\mathcal{X}}\left( \hat{f}(x_0) \right) & = & \bm{l}^{T}(x_0; \mathcal{X})\, \textrm{Cov}(\bm{\epsilon}) \, \bm{l}(x_0; \mathcal{X}) = \sigma^2 \, ||\bm{l}(x_0; \mathcal{X})||^2
+\end{eqnarray*}
+where we denoted $(\bm{l}(x_0; \mathcal{X}))_i \equiv l_i(x_0; \mathcal{X})$ and $(\bm{f}(X))_i \equiv f(x_i)$. Hence:
+\begin{eqnarray*}
+    \mathbb{E}_{\mathcal{Y}| \mathcal{X}} \left[ \left( f(x_0) - \hat{f}(x_0) \right)^2 \right]  & = & \textrm{Bias}^2_{\mathcal{Y}| \mathcal{X}}(y_0) + \textrm{Var}_{\mathcal{Y}| \mathcal{X}}(y_0)\\ 
+    \textrm{Bias}^2_{\mathcal{Y}| \mathcal{X}}(y_0) & \equiv & \left( f(x_0) - \bm{l}^{T}(x_0; \mathcal{X})\,\bm{f}(X) \right)^2\\
+    \textrm{Var}_{\mathcal{Y}| \mathcal{X}}(y_0) & \equiv & \sigma^2 ||\bm{l}(x_0; \mathcal{X})||^2 
+\end{eqnarray*}
+The first term represents the bias, while the second represents the variance of the estimator as the training responses vary for fixed $\mathcal{X}$.
+
+\subsubsection*{Point (c)}
+
+For this part can go down a similar road, using now the independence of $X$ and $\epsilon$:
+\begin{eqnarray*}
+    \mathbb{E}_{\mathcal{Y},\mathcal{X}} \left[ \hat{f}(x_0) \right] & = & \mathbb{E}_{\mathcal{X}} \left[ \bm{l}^T(x_0; \mathcal{X}) \, \bm{f}(X) \right],\\
+    \textrm{Var}_{\mathcal{Y},\mathcal{X}}\left( \hat{f}(x_0) \right) & = & \textrm{Var}_{\mathcal{X}} \left( \bm{l}^T(x_0; \mathcal{X}) \, \bm{f}(X) \right) + 
+    \sigma ^2 \mathbb{E}_{\mathcal{X}} \left[ ||\bm{l}(x_0; \mathcal{X})||^2  \right],
+\end{eqnarray*}
+Hence:
+\begin{eqnarray*}
+    \mathbb{E}_{\mathcal{Y}, \mathcal{X}} \left[ \left( f(x_0) - \hat{f}(x_0) \right)^2 \right] & = & \textrm{Bias}^2_{\mathcal{Y}, \mathcal{X}}(y_0) + \textrm{Var}_{\mathcal{Y}, \mathcal{X}}(y_0)\\
+    \textrm{Bias}^2_{\mathcal{Y}, \mathcal{X}}(y_0) & \equiv &\left( f(x_0) - \mathbb{E}_{\mathcal{X}} \left[ \bm{l}^T(x_0; \mathcal{X}) \, \bm{f}(X) \right]  \right)^2\\
+    \textrm{Var}_{\mathcal{Y}, \mathcal{X}}(y_0) & \equiv & \textrm{Var}_{\mathcal{X}} \left( \bm{l}^T(x_0; \mathcal{X}) \, \bm{f}(X) \right) + 
+    \sigma ^2 \mathbb{E}_{\mathcal{X}} \left[ ||\bm{l}(x_0; \mathcal{X})||^2  \right]
+\end{eqnarray*}
+
+\subsubsection*{Point (d)}
+
+Combining the equations above one can see that:
+\begin{eqnarray*}
+    \textrm{Bias}^2_{\mathcal{Y}, \mathcal{X}}(y_0) + \textrm{Var}_{\mathcal{Y}, \mathcal{X}}(y_0) = \mathbb{E}_{\mathcal{X}} \left( \textrm{Bias}^2_{\mathcal{Y}| \mathcal{X}}(y_0) + \textrm{Var}_{\mathcal{Y}| \mathcal{X}}(y_0) \right)
+\end{eqnarray*}
+which is a simple consequence of the conditional expectations identity:
+\begin{eqnarray*}
+    \mathbb{E}_{\mathcal{Y}, \mathcal{X}} \left[ \left( f(x_0) - \hat{f}(x_0) \right)^2 \right] =  \mathbb{E}_{\mathcal{X}} \left[ \mathbb{E}_{\mathcal{Y}| \mathcal{X}} \left[ \left( f(x_0) - \hat{f}(x_0) \right)^2 \right]  \right]
+\end{eqnarray*}
+{\color{red} This might be the relationship the authors wanted us to find.}

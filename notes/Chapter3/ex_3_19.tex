@@ -1,0 +1,26 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{3.19}
+
+Remember that, after predictor demeaning:
+\begin{eqnarray*}
+    \beta^{\textrm{ridge}}(\lambda) & = & \left( \mathbf{X} ^T \mathbf{X} + \lambda \mathbb{I} \right)^{-1} \mathbf{X}^T \mathbf{y}
+\end{eqnarray*}
+Hence:
+\begin{eqnarray*}
+    ||\beta^{\textrm{ridge}}(\lambda)|| ^2 & = & \mathbf{y} ^T \mathbf{X} \left( \mathbf{X} ^T \mathbf{X} + \lambda \mathbb{I} \right)^{-1} \left( \mathbf{X} ^T \mathbf{X} + \lambda \mathbb{I} \right)^{-1} \mathbf{X} ^T \mathbf{y}
+\end{eqnarray*}
+The following identity holds for symmetric, invertible matrices:
+\begin{eqnarray*}
+    \frac{d}{d \lambda} \left( A(\lambda) \right)^{-1} = - A^{-1} \frac{dA}{d \lambda} A^{-1}
+\end{eqnarray*}
+We get:
+\begin{eqnarray*}
+    \frac{d}{d \lambda} ||\beta^{\textrm{ridge}}(\lambda)|| ^2 & = & - 2\, \mathbf{y} ^T \mathbf{X} \left( \mathbf{X} ^T \mathbf{X} + \lambda \mathbb{I} \right)^{-1} \left( \mathbf{X} ^T \mathbf{X} + \lambda \mathbb{I} \right)^{-1} \left( \mathbf{X} ^T \mathbf{X} + \lambda \mathbb{I} \right)^{-1} \mathbf{X} ^T \mathbf{y} \\
+    & = & -2\, \mathbf{z}^T \left( \mathbf{X} ^T \mathbf{X} + \lambda \mathbb{I} \right)^{-1} \mathbf{z} \\
+    \mathbf{z} & \equiv & \left( \mathbf{X} ^T \mathbf{X} + \lambda \mathbb{I} \right)^{-1} \mathbf{X}^T \mathbf{y} 
+\end{eqnarray*}
+The matrix $\left( \mathbf{X} ^T \mathbf{X} + \lambda \mathbb{I} \right)^{-1}$ is positive definite, being the inverse of a symmetric, positive definite matrix. Hence:
+\begin{eqnarray*}
+    \frac{d}{d \lambda} ||\beta^{\textrm{ridge}}(\lambda)|| ^2 & = & -2\, \mathbf{z}^T \left( \mathbf{X} ^T \mathbf{X} + \lambda \mathbb{I} \right)^{-1} \mathbf{z} \leq 0
+\end{eqnarray*}

@@ -1,4 +1,4 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[11pt,a4paper]{book}
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{array}
@@ -8,24 +8,40 @@
 \usepackage{graphicx}
 \usepackage{geometry}
 \usepackage{amsmath, bm}
+\usepackage{booktabs}
 
 \DeclareMathOperator*{\argmax}{argmax}
 \DeclareMathOperator*{\argmin}{argmin}
 \graphicspath{ {Figures/} }
 \newcommand{\afterdef}{\vspace{0.2cm}}
+
 \newcommand{\half}{200pt}
 \newcommand{\halfspace}{\hspace{18pt}}
+
 \newcommand{\seecode}{{\color{blue} (see Jupyter Notebook)}}
+\newcommand{\eslchapter}[2]{\chapter*{Chapter #1: #2} \addcontentsline{toc}{chapter}{Chapter #1: #2}
+\markboth{Chapter #1: #2}{Chapter #1: #2}}
+\newcommand{\exercise}[1]{\section*{Ex. #1} \addcontentsline{toc}{section}{Ex. #1}}
 
 \title{Solutions to the exercises of ESL, Second Edition}
-
+\author{Lorenzo Battarra}
 
 \begin{document}
+    
+ 
 
 \maketitle
 
-\include{Chapter2}
-\include{Chapter3}
+\tableofcontents
+
+\include{notation}
+
+\mainmatter
+
+\include{Chapter2/Chapter2}
+\include{Chapter3/Chapter3}
+
+\bibliography{bib_esl_solutions}{}
 
 
 

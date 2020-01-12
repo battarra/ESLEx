@@ -1,0 +1,18 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{2.3}
+
+The variables $\rho_i \equiv ||x_i||$ are i.i.d. with c.d.f.: 
+\begin{eqnarray}
+P(\rho_i \leq \bar{\rho}) = \bar{\rho}^p
+\end{eqnarray}
+So letting $\rho_m \equiv \min(\{\rho_i\}_{i=1,\ldots,N})$, one has:
+\begin{eqnarray}\label{eq:2p3_1}
+P\left(\rho_m \geq \bar{\rho}\right) = \prod_{i=1}^{N}P\left(\rho_i \geq 
+\bar{\rho}\right) = \left(1 - \rho^p \right)^N
+\end{eqnarray}
+The median of $\rho_m$ is the value $\rho^\star$ s.t. $P\left(\rho_m \geq 
+\rho^\star\right) = 1/2$. Using \eqref{eq:2p3_1} it is easy to see that:
+\begin{eqnarray}
+\rho^\star = \left(1 - \frac{1}{2^{1/N}} \right) ^{1/p}
+\end{eqnarray}

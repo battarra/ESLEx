@@ -12,4 +12,6 @@
 
 **/*.aux
 **/*.log
+**/*.idx
+**/*.toc
 **/*.synctex.gz

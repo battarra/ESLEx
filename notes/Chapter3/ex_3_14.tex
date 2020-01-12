@@ -1,0 +1,18 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{3.14}
+
+When predictors are orthogonal and normalised ($\langle \mathbf{x}_j, \mathbf{x}_k \rangle = N \, \delta_{jk}$), the vector $\hat{\theta}_1 \, \mathbf{z}_1$ found at the first step of the PLS procedure is the orthogonal projection of $\mathbf{y}$ on the span of the $\mathbf{x}$'s:
+\begin{eqnarray*}
+    \mathbf{z}_1 & = & \sum_{j=1}^p \langle \mathbf{x}_j, \mathbf{y} \rangle\, \mathbf{x}_j\\
+    \hat{\theta}_1 & = & \frac{\langle \mathbf{z}_1, \mathbf{y} \rangle}{\langle \mathbf{z}_1, \mathbf{z}_1 \rangle} = \frac{\sum_{j=1}^p \langle \mathbf{x}_j, \mathbf{y} \rangle ^2}{N \sum_{j=1}^p \langle  \mathbf{x}_j, \mathbf{y} \rangle ^2} = 1/N\\
+    \hat{\theta}_1 \mathbf{z}_1 & = & \sum_{j=1}^p \frac{\langle \mathbf{x}_j, \mathbf{y} \rangle}{N} \, \mathbf{x}_j = \sum_{j=1}^p \frac{\langle \mathbf{x}_j, \mathbf{y} \rangle}{\langle \mathbf{x}_j, \mathbf{x}_j \rangle} \, \mathbf{x}_j = \hat{\mathbf{y}}^{ls}
+\end{eqnarray*}
+In other words, at step $m = 1$ we find the OLS fit of $\mathbf{y}$ against the $\mathbf{x}$'s. In preparation
+for the next step, the $\mathbf{x}_j$ are residualised against $\mathbf{z}_1$: we obtain a set of vectors
+$\mathbf{x}_j^{(1)}$ which still lie in the span of the $\mathbf{x}$'s, but are orthogonal to the projection
+of $\mathbf{y}$ onto the same subspace. Therefore, at the next step, we'll have:
+\begin{eqnarray*}
+    \hat{\varphi}_{2j} = \langle \mathbf{x}_{j}^{(1)}, \mathbf{y} \rangle =  \langle \mathbf{x}_{j}^{(1)}, \hat{\mathbf{y}}^{ls} \rangle = 0
+\end{eqnarray*}
+This makes step $m = 2$ and all other steps void, since all $\mathbf{z}_m$'s are zero for $m \geq 2$.

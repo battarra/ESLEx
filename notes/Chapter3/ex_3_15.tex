@@ -1,0 +1,291 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{3.15}
+
+
+I believe that the $p$-dimensional vectors $\hat{\varphi}_m$ produced by Algorithm 3.3 in the text are distinct from the $\hat{\phi}_m$ produced by:
+\begin{eqnarray} \label{3p15_e0}
+\hat{\phi}_m  =  \textrm{argmax}_\alpha\, \textrm{Corr}^2 \left( \mathbf{y}, \mathbf{X} \alpha \right)\, \textrm{Var} \left( \mathbf{X} \alpha \right)\\ \nonumber
+\textrm{subject to} \, ||\alpha|| = 1, \quad \alpha^T S \hat{\phi}_l = 0, \;l = 1, \ldots, m - 1
+\end{eqnarray}
+Indeed, the $\hat{\varphi}_m$ not only are not normalized, but do not satisfy $ \hat{\varphi}_m S \hat{\varphi}_l = 0$ for $l \neq m$. For example one can show that:
+\begin{eqnarray*}
+    \hat{\varphi}_2 = \hat{\varphi}_1 - \frac{||\hat{\varphi}_1||^2}{\hat{\varphi}_1^T S \hat{\varphi}_1}\, S \hat{\varphi}_1
+\end{eqnarray*}
+hence:
+\begin{eqnarray*}
+    \hat{\varphi}_1^T S \hat{\varphi}_2 = \hat{\varphi}_1^T S \hat{\varphi}_1 - ||\hat{\varphi}_1||^2 \, \frac{\hat{\varphi}_1^T S^2 \hat{\varphi}_1}{\hat{\varphi}_1^T S \hat{\varphi}_1}
+\end{eqnarray*}
+The rhs is generally different from zero. 
+
+I believe this is only a notation collision, as the statement can be easily corrected.
+Since the $\mathbf{x}_j^{(m)}$ are constructed as linear combinations of the original $\mathbf{x}_j$'s, one can write the $\mathbf{z}_m$'s as linear combinations of the $\mathbf{x}_j$'s:
+\begin{eqnarray}  \label{3p15_e1}
+\mathbf{z}_m  =   \sum_{j = 1}^p \left( \hat{\varphi}_m \right)_j  \, \mathbf{x}^{(m-1)}_j= \sum_{j = 1}^p \left( \hat{\phi}_m \right)_j \, \mathbf{x}_j
+\end{eqnarray}
+I believe the correct statement is: the $\hat{\phi}_m$'s in this equation can be obtained via (\ref{3p15_e0}). Indeed, the
+sample covariance between $\mathbf{z}_m$ and $\mathbf{z}_l$ is given 
+by $\hat{\phi}_m^T S \hat{\phi}_l$, not by $\hat{\varphi}_m^T S \hat{\varphi}_l$. This is because the $\hat{\varphi}_m$ coordinate vectors correspond to different basis vectors $(\mathbf{x}^{(m-1)})_j \neq \mathbf{x}_j$, whose
+covariance is not given by $S$.
+
+To recap, consider the two sets of vectors:
+\begin{eqnarray}\label{3p15_e10}
+\hat{\phi}_m  & = &  \textrm{argmax}_\alpha\, \textrm{Corr}^2 \left( \mathbf{y}, \mathbf{X} \alpha \right)\, \textrm{Var} \left( \mathbf{X} \alpha \right) = \textrm{argmax}_\alpha\, \left( \alpha^T \mathbf{X}^T \mathbf{y} \right)^2\\ \nonumber
+&& \textrm{subject to} \, ||\alpha|| = 1, \quad \alpha^T S \hat{\phi}_l = 0, \;l = 1, \ldots, m - 1\\
+\mathbf{v}_m & \equiv & \mathbf{X}\, \hat{\phi}_m 
+\end{eqnarray}
+and the one produced by Algorithm 3.3:
+\begin{eqnarray}
+\hat{\varphi}_m & = & \mathbf{X}^{(m-1) \, T} \mathbf{y}\\
+\label{3p15_3p3}
+\mathbf{z}_m & \equiv & \mathbf{X}^{(m-1)} \hat{\varphi}_m \\
+\label{3p15_orthRec}
+\mathbf{X}^{(m)} & = & \mathbf{X}^{(m-1)} - \frac{\mathbf{z}_{m} \mathbf{z}_{m}^T \mathbf{X}^{(m - 1)}}{||\mathbf{z}_{m}||^2}\\
+\mathbf{X}^{(0)} & \equiv &\mathbf{X}
+\end{eqnarray}
+We will prove that $\mathbf{z}_m \propto \mathbf{v}_m$, \textit{assuming that $S$ is positive definite}. The proof is very lengthy and it seems likely that a shorter
+proof should be possible...
+\vspace{0.5cm}\\
+\noindent\textbf{Result A.} \textit{The sequence $\hat{\phi}_m$ contains $p$ vectors, which are all non-zero and 
+    may or may not be unique.}
+
+\noindent The vectors $\hat{\phi}_m$ are unit-norm hence not equal to zero. The matrix $S$ defines a positive definite scalar product on $\mathbb{R}^p$, so the subspace:
+\begin{eqnarray*}
+    \mathcal{O}_m \equiv \left\{ \alpha: \; \alpha^T S \hat{\phi} _{1} =  \alpha^T S \hat{\phi} _{ m - 1} = 0 \right\}
+\end{eqnarray*}
+has dimension $(p - m + 1)$, which proves that the sequence stops at $ m = p$.
+\vspace{0.5cm}\\
+\noindent \textbf{Result B.} \textit{The vectors $\mathbf{v}_m$ are non-zero and mutually orthogonal.}
+
+\noindent These two property follow immediately from the definition of $\mathbf{v}_m$:
+\begin{eqnarray*}
+    \mathbf{v}_m ^T \mathbf{v}_n \equiv \hat{\phi}_m ^T S \hat{\phi}_n
+\end{eqnarray*}
+For $m \neq n$, this product is zero because of the constraints in (\ref{3p15_e10}). For $m = n$,
+it needs to be positive since $S$ is positive definite and $\hat{\phi}_m \neq 0$.
+
+\vspace{0.5cm}
+\noindent \textbf{Result C.} \textit{Let $s \equiv \mathbf{X}^T \mathbf{y}$ and consider the sequence
+    of vectors:}
+\begin{eqnarray*}
+    s, Ss, \ldots, S^{p - 1}s
+\end{eqnarray*}
+\textit{Let $\bar{m}$ be the largest $m$ such that $S^{m - 1}$ is linearly independent
+    from the previous vectors $s, \ldots, S^{m - 2} s$, with $\bar{m} = 0$ if $s = 0$. Then, for each $m = 1, \ldots, \bar{m}$:}
+\textit{\begin{itemize}
+        \item[a)] $\hat{\phi}_m$ is unique up to a sign and proportional to the component of $S^{m - 1}s$ which is $S$-orthogonal to 
+        $s, \ldots, S^{m - 2} s$.
+        \item[b)] $(\hat{\phi}_m \cdot s)^2 = (\mathbf{v}_m \cdot \mathbf{y})^2 > 0$.
+        \item[c)] $\mathbf{v}_m$ is proportional to the component of $\mathbf{X} S^{m-1} s$
+        which is euclidean-orthogonal to $\textrm{Span}\left(\mathbf{X} s, \mathbf{X}Ss, \mathbf{X}S^{m - 2}s\right) = \textrm{Span} \left( \mathbf{v}_1, \ldots, \mathbf{v}_{m - 1} \right)$.
+\end{itemize}}
+
+\noindent Each vector $\hat{\phi}_m$ must satisfy the Lagrange equation:
+\begin{eqnarray} \label{3p15_e11}
+0 = \left( \hat{\phi}_m^T \mathbf{X}^T \mathbf{y} \right) \mathbf{X}^T \mathbf{y} - \lambda \hat{\phi}_m - \sum_{l = 1}^{m - 1} \nu_l S \hat{\phi}_l = (s \cdot \hat{\phi}_m) s - \lambda \hat{\phi}_m - \sum_{l = 1}^{m - 1} \nu_l S \hat{\phi}_l
+\end{eqnarray}
+for some ($m$-specific) values of the Lagrange multipliers $\lambda, (\nu_l)_l$. Taking the scalar
+product of (\ref{3p15_e11}) with $\hat{\phi}_m$ and using the constraints it is easy to fix the value
+of $\lambda$:
+\begin{eqnarray*}
+    0 = (s \cdot \hat{\phi}_m) s -  (s \cdot \hat{\phi}_m)^2 \hat{\phi}_m - \sum_{l = 1}^{m - 1} \nu_l S \hat{\phi}_l
+\end{eqnarray*}
+This equation implies that either $\hat{\phi}_m$ is orthogonal to $s$, or:
+\begin{eqnarray} \label{3p15_span}
+\hat{\phi}_m \in \textrm{Span} \left( s, S \hat{\phi}_1, \ldots, S \hat{\phi}_{m - 1}  \right)
+\end{eqnarray}
+Note that if $\hat{\phi}_m$ is orthogonal to $s$, the maximizand in Equation (\ref{3p15_e10}) is
+zero:
+\begin{eqnarray*}
+    \left( \hat{\phi}_m^T \mathbf{X}^T \mathbf{y} \right)^2 = \left(\hat{\phi}_m \cdot s  \right)^2
+\end{eqnarray*}
+Notice that if $\bar{m} = 0$ ($s = 0$), there is nothing to prove, hence we assume $\bar{m} \geq 1$.
+With this in mind, we can now prove Result C by induction on $m = 1, \ldots, \bar{m}$:
+\begin{itemize}
+    \item $\mathbf{m = 1}$: If $\hat{\phi}_m$ is not orthogonal to $s$, Equation (\ref{3p15_span}) requires
+    it to be proportional to $s$, hence equal to $s / ||s||$ up to a sign. This vector satisfies
+    property b), hence it is chosen by the maximization (\ref{3p15_e10}) over vectors orthogonal to $s$,
+    which have zero value of the maximizand. This proves its uniqueness and point a). Point c) is
+    straightforward.
+    \item $\mathbf{(1, \ldots, m) \Rightarrow m + 1}$: The inductive hypothesis a) for $\hat{\phi}_1, \ldots, \hat{\phi}_m$ implies:
+    \begin{eqnarray*}
+        \textrm{Span}\left(\hat{\phi}_1, \ldots, \hat{\phi}_m \right) = \textrm{Span} \left( s, \ldots, S^{m - 1}s \right)
+    \end{eqnarray*}
+    which also yields:
+    \begin{eqnarray*}
+        \textrm{Span}\left(s, S\hat{\phi}_1, \ldots, S\hat{\phi}_m \right) = \textrm{Span} \left( s, \ldots, S^{m - 1}s, S^m s \right)
+    \end{eqnarray*}
+    Therefore, unless it is orthogonal to $s$, $\hat{\phi}_{m + 1}$ must both belong to $\textrm{Span} \left( s, \ldots, S^m s \right)$ and be $S$-orthogonal to $\textrm{Span} \left( s, \ldots, S^{m - 1}s \right)$. The constraint imply that this vector is unique up to a sign, and proportional to the component of $S^m s$ which is $S$-orthogonal to $s, \ldots, S^{m - 1}s$. Let's denote this candidate
+    vector by $\phi_{m+1,c}$. Note that $\phi_{m+1,c} \neq 0$ since $m + 1 < \bar{m}$ and $S^m s$ is linearly independent from $s, \ldots, S^{m - 1}s$. To prove that $\hat{\phi}_{m + 1} = \phi_{m + 1, c}$ it suffices to show that $\phi_{m + 1, c}$ satisfies b), so that it is chosen by the maximization (\ref{3p15_e10}) over any vector orthogonal to $s$. Note that, by construction, $\phi_{m + 1, c}$ satisfies:
+    \begin{eqnarray*}
+        \phi_{m + 1, c}^T\, S s = \ldots = \phi_{m + 1, c}^T\, S^{m} s = 0
+    \end{eqnarray*}
+    i.e.:
+    \begin{eqnarray*}
+        \phi_{m + 1, c} \perp Ss, \ldots, S^{m} s
+    \end{eqnarray*}
+    where the orthogonality symbol refers to the euclidean scalar product. We see that $\phi_{m + 1, c}$
+    cannot be orthogonal to $s$ too, because in that case it could not belong to:
+    \begin{eqnarray*}
+        \textrm{Span} \left( s, \ldots, S^m s \right)
+    \end{eqnarray*}
+    Therefore, $\phi_{m + 1, c} \cdot s \neq 0$ and the maximizand takes a strictly positive value:
+    \begin{eqnarray*}
+        \left( \phi_{m + 1, c} \cdot s \right)^2 > 0
+    \end{eqnarray*}
+    This proves points a) and b). Point c) follows mechanically from the inductive hypothesis.
+\end{itemize}
+We are now left with the description of the $\hat{\phi}_m$ sequence for $\bar{m} < m \leq p$ (if any).
+
+\hspace{0.5cm}\\
+\textbf{Result D.} \textit{When $\bar{m} < p$, the subspace:
+    \begin{eqnarray*}
+        \mathcal{O}_{\bar{m} + 1} \equiv \left\{ \alpha: \; \alpha^T S \hat{\phi} _{1} = \ldots =  \alpha^T S \hat{\phi} _{ \bar{m}} = 0 \right\}
+    \end{eqnarray*} is a $(p - \bar{m})$-dimensional subspace of:
+    \begin{eqnarray*}
+        \left\{ \alpha: \; \alpha \cdot s = \alpha^T \mathbf{X}^T \mathbf{y} = 0\right\}
+    \end{eqnarray*}
+    Therefore, for $\bar{m} < m \leq p$ the maximization criterion (\ref{3p15_e10}) is void, and
+    the vectors $\hat{\phi}_m$ can be chosen as arbitrary unit-norm, mutually $S$-orthogonal
+    vectors in $\mathcal{O}_{\bar{m} + 1}$. The vectors $\mathbf{v}_m$ are orthogonal to $\mathbf{y}$ and will not appear in the regression, so the sequence can be thought of as terminating at $m = \bar{m}$.
+}
+
+\noindent We have already established that:
+\begin{eqnarray*}
+    \textrm{Span} \left( \hat{\phi}_1, \ldots, \hat{\phi}_{\bar{m}} \right) = 
+    \textrm{Span} \left( s, \ldots, S^{\bar{m} - 1} s \right)
+\end{eqnarray*}
+therefore:
+\begin{eqnarray} \label{3p15_e13}
+\mathcal{O}_{\bar{m} + 1} = \left\{ \alpha: \; \alpha^T S s = \ldots = \alpha^T S^{\bar{m}} s = 0 \right\}	
+\end{eqnarray}
+By definition of $\bar{m}$, we know that $S^{\bar{m}} s$ can be expressed as a linear combination 
+of $s, \ldots, S^{\bar{m} - 1}s$:
+\begin{eqnarray} \label{3p15_e12}
+S^{\bar{m}} s - a_1 S s - \ldots - a_{\bar{m} - 1} S^{\bar{m} - 1} s = a_0 s
+\end{eqnarray}
+Note that $a_0 \neq 0$, otherwise one could multiply (\ref{3p15_e12}) by $S^{-1}$ and write $S^{\bar{m} - 1}$ as a linear combination of the $s, \ldots, S^{\bar{m} - 2}s$, which
+violates the definition of $\bar{m}$. If $\alpha$ belongs to $\mathcal{O}_{\bar{m} + 1}$,
+the scalar product of the lhs with $\alpha$ is zero because of (\ref{3p15_e13}), therefore
+$\alpha \cdot s = 0$.
+
+This completes the characterization of the sequence generated by (\ref{3p15_e10}). Now we
+move to the one generated by Algorithm 3.3.
+\vspace{0.5cm}\\
+\noindent \textbf{Result E.} \textit{The sequence $\mathbf{z}_m$ contains at most $p$ vectors, after
+    which the recurrence is undefined.}
+
+\noindent Let $m ^{\star}$ be the smallest $m \geq 0$ such that $\mathbf{z}_{m ^{\star} + 1}$ = 0. The vectors $\mathbf{z}_1, \ldots, \mathbf{z}_{m ^{\star}}$ are mutually orthogonal and non-zero, hence
+linearly independent. This implies $m ^{\star} \leq p$, since all $\mathbf{z}_m$'s belong to the
+$p$-dimensional Span of the columns of $\mathbf{X}$. 
+For $m > m ^{\star} + 1$, the recursive procedure (\ref{3p15_orthRec}) becomes undefined. Therefore,
+the sequence effectively stops at $m = m ^{\star}$.
+\vspace{0.5cm}\\
+\textbf{Result F.} For $m = 1, \ldots, \bar{m}$ one has $\mathbf{z}_m \propto \mathbf{v}_m$, i.e. Algorithm 3.3 and (\ref{3p15_e10}) produce equivalent sequences.
+
+\noindent To prove this key point, we adopt two inductive hypotheses:
+\begin{eqnarray}
+\label{3p15_ip1}
+\hat{\varphi}_m & \in & \textrm{Span} \left( s, Ss, \ldots, S^{m - 1} s \right) - \textrm{Span} \left( s, Ss, \ldots, S^{m - 2} s \right)\\
+\mathbf{z}_m & \propto & \mathbf{v}_m
+\end{eqnarray}
+The first hypothesis simply means that $\hat{\varphi}_m$ can be written as a linear combination of the $s, Ss, \ldots, S^{m - 1} s$, which are linearly independent
+according to previous results, with a non-zero coefficient for $S^{m - 1} s$. If $ \bar{m} = 0$ there is nothing to prove, so we can assume $\bar{m} \geq 1$:
+\begin{itemize}
+    \item $ \mathbf{m = 1}$: Since $\mathbf{X}^{(0)} \equiv \mathbf{X}$ this follows mechanically:
+    \begin{eqnarray*}
+        \hat{\varphi}_1 & = & \mathbf{X}^T \mathbf{y} \equiv s\\
+        \mathbf{z}_1 & = & \mathbf{X} \hat{\varphi}_1 = \mathbf{X} s \propto \mathbf{X} \hat{\phi}_1 \equiv \mathbf{v}_1
+    \end{eqnarray*}
+    \item $\mathbf{(1, \ldots, m) \Rightarrow m + 1}$: First, we prove that $\hat{\varphi}_{m + 1}$ belongs to $\textrm{Span} \left( s, \ldots, S^m s \right)$. Recalling the definition:
+    \begin{eqnarray*}
+        \hat{\varphi}_{m + 1} \equiv \mathbf{X}^{(m) \, T} \mathbf{y}
+    \end{eqnarray*}
+    we notice that the recurrence for $\mathbf{X}^{(m)}$ can be re-written as:
+    \begin{eqnarray} \label{3p15_unroll}
+    \mathbf{X}^{(m)} = \mathbf{X}^{(m-1)} - \frac{ \mathbf{z}_m \mathbf{z}_m^T \mathbf{X}}{||\mathbf{z}_m||^2}
+    \end{eqnarray}
+    Indeed, the difference between $\mathbf{X}^{(m - 1)}$ and $\mathbf{X}$ is a linear combination of the vectors $\mathbf{z}_1, \ldots, \mathbf{z}_{m - 1}$, which are by 
+    construction orthogonal to $\mathbf{z}_m$. Therefore:
+    \begin{eqnarray*}
+        \hat{\varphi}_{m + 1} = \hat{\varphi}_{m} - \frac{\mathbf{z}_m \cdot \mathbf{y}}{|| \mathbf{z}_m||^2} \mathbf{X}^T \mathbf{z}_m
+    \end{eqnarray*}
+    The first term belongs to $\textrm{Span}\left( s, \ldots, S^{m - 1}s \right)$ by the inductive hypothesis. Also from the inductive hypothesis, we know that $\mathbf{z}_m \propto \mathbf{v}_m$ and we
+    established in Result C that $\mathbf{v}_m \cdot \mathbf{y} \neq 0$. Therefore, the coefficient of
+    the term $\mathbf{X}^T \mathbf{z}_m \propto \mathbf{X}^T \mathbf{v}_m $ is different
+    from zero. We established
+    in Result C that $\hat{\phi}_m$ is the component of $S^{m - 1} s$ which is $S$-orthogonal to $s, \ldots, S^{m - 2} s$, therefore it admits a linear expansion:
+    \begin{eqnarray*}
+        \hat{\phi}_m = a_0 s + \ldots + a_{m - 1} S^{m - 1}s
+    \end{eqnarray*}
+    with $a_{m -1} \neq 0$. The identity $\mathbf{X}^T \mathbf{v}_m = S \hat{\phi}_m$ implies that the
+    expansion of $\hat{\varphi}_{m + 1}$ contains a non-zero term in $S^m s$ and proves the first inductive hypothesis (\ref{3p15_ip1}) for $m + 1$.
+    
+    To complete the proof, note that (\ref{3p15_unroll}) can be unwrapped as:
+    \begin{eqnarray*}
+        \mathbf{X}^{(m)} = \mathbf{X} - \frac{ \mathbf{z}_1 \mathbf{z}_1^T \mathbf{X}}{||\mathbf{z}_1||^2} - \ldots  - \frac{ \mathbf{z}_m \mathbf{z}_m^T \mathbf{X}}{||\mathbf{z}_m||^2}
+    \end{eqnarray*}
+    Therefore:
+    \begin{eqnarray} \label{3p15_last}
+    \mathbf{z}_{m + 1} = \mathbf{X} \hat{\varphi}_{m + 1} - \frac{\mathbf{z}_1^T \mathbf{X} \hat{\varphi}_{m + 1}}{ || \mathbf{z}_1||^2} \mathbf{z}_1 - \ldots - 
+    \frac{\mathbf{z}_m^T \mathbf{X} \hat{\varphi}_{m + 1}}{ || \mathbf{z}_m||^2} \mathbf{z}_m
+    \end{eqnarray}
+    By the inductive hypothesis, $\mathbf{z}_l \propto \mathbf{v}_l$ for $l = 1, \ldots, m$. 
+    Therefore, remembering Result C, all the terms in the rhs of (\ref{3p15_last}) except the first one belong to:
+    \begin{eqnarray*}
+        \textrm{Span} \left( \mathbf{X}s, \ldots, \mathbf{X}S^{m - 1}s \right)
+    \end{eqnarray*}
+    What about the first term? We have just proven that $\hat{\varphi}_{m + 1}$ can be written as
+    a linear combination of $s, \ldots, S^{m}s$, with a non-zero coefficient for this last term.
+    Therefore, $\mathbf{z}_{m +1}$ satisfies:
+    \begin{eqnarray*}
+        \mathbf{z}_{m + 1} \in \textrm{Span} \left( \mathbf{X}s, \ldots, \mathbf{X}S^{m} s \right)
+    \end{eqnarray*}
+    and it is non-zero, because the $\mathbf{X}S^{m} s$ term is linearly independent from the 
+    others ($m + 1 \leq \bar{m}$) and has non-zero coefficient. By construction, however, $\mathbf{z}_{m +1}$ is orthogonal to each $\mathbf{z}_l \propto \mathbf{v}_l, l = 1, \ldots, m$. This implies
+    that $\mathbf{z}_m$ is proportional to the component of $\mathbf{X} S^{m} s$ that is orthogonal
+    to $\mathbf{v}_1, \ldots, \mathbf{v}_m$, i.e. $\mathbf{z}_m \propto \mathbf{v}_m$.
+\end{itemize}
+
+\vspace{0.5cm}
+\noindent \textbf{Result G.} \textit{ The two sequences can always be thought of as terminating together, $\bar{m} = m ^{\star}$. More specifically, for $m = 1, \ldots, \bar{m}$ one has $\mathbf{z}_m \propto \mathbf{v}_m$. Also $\mathbf{z}_{\bar{m} + 1} = 0$, and the following $\mathbf{z}_m$'s are undefined. On the other hand, for $\bar{m} < p$ the vectors $\mathbf{v}_{\bar{m} + 1}, \ldots, \mathbf{v}_{p}$ can be still defined, but they are all orthogonal to $\mathbf{y}$
+    and if $p - \bar{m} > 1$ they are not uniquely specified by (\ref{3p15_e10}).}
+
+\noindent In Result F we have proven that, for $m = 1, \ldots, \bar{m}$, one has $\mathbf{z}_m \propto \mathbf{v}_m$. Repeating the steps of the inductive proof for $m = \bar{m}$ and using the fact that
+$S^{\bar{m}} s$ is linearly dependent on $s, \ldots, S^{\bar{m} -1}s$, it is easy to prove
+that $\mathbf{z}_{\bar{m} + 1}$ can be written as linear combination of $\mathbf{X}s, \ldots, \mathbf{X}S^{\bar{m} - 1}s$. However, we know by construction that $\mathbf{z}_{\bar{m} + 1}$ needs
+to be orthogonal to the subspace generated by these same vectors, hence $\mathbf{z}_{\bar{m} + 1} = 0$.
+The remaining parts of the proof follow from the previous results.
+
+\vspace{0.5cm} Finally, one may wonder how generic $\bar{m} < p$ is. For fixed predictor values and as long as $S$ is non-singular (which in particular requires $N \geq p$) the vector $s$ can take any values:
+\begin{eqnarray*}
+    s \equiv \mathbf{X}^T \mathbf{y}: \quad \mathbf{y} = \mathbf{X} S^{-1} s + \mathbf{y}_\perp
+\end{eqnarray*}
+where $\mathbf{y}_\perp$ is any vector with $\mathbf{X}^T \mathbf{y}_\perp = 0$. Therefore, unless
+$S$ has some special structure, the probability of finding:
+\begin{eqnarray*}
+    S^{m - 1} s - a_0 s - a_1 S s - a_{m - 2} S^{m - 2} s = 0
+\end{eqnarray*}
+for $m \leq p$ should be zero, as we have $p$ equations and $m - 1 < p$ parameters. The special structure could be:
+\begin{eqnarray*}
+    S^{m - 1} - a_0 \mathbb{I} - a_1 S - \ldots - a_{m - 2} S^{m - 2} = 0
+\end{eqnarray*}
+Using the SVD of $\mathbf{X} = \mathbf{U} \Lambda^{1/2} V^T$, this reads:
+\begin{eqnarray} \label{3p15_vdm}
+\Lambda^{m - 1} - a_0 \mathbb{I} - a_1 \Lambda - \ldots - a_{m - 2} \Lambda^{m-2} = 0
+\end{eqnarray}
+This is means that the vector of the $(m - 1)$-th powers of the PCA components variances should be linearly dependent on the vectors corresponding to lower powers. Equation (\ref{3p15_vdm}) requires the Vandermonde matrix:
+\begin{eqnarray*}
+    \left(
+    \begin{array}{ccccc}
+        1 & \lambda_1 & \lambda_1^2 & \ldots & \lambda_{1}^{m - 1}\\
+        1 & \lambda_2 & \lambda_2^2 & \ldots & \lambda_{2}^{m - 1}\\
+        \vdots & \vdots & \vdots & \ldots & \vdots\\
+        1 & \lambda_p & \lambda_p^2 & \ldots & \lambda_{p}^{m - 1}
+    \end{array}
+    \right)
+\end{eqnarray*}
+to have rank smaller than $m$. The Vandermonde
+matrix has rank $m$ if and only if at least $m$ of the $\lambda_j$'s are distinct.
+We conclude that $\bar{m}$ is generally equal to the number of distinct PCA components' variances. Even though predictors are normalised before
+PLS and barring special cases such as orthogonal predictors ($\bar{m} = 1$), one should expect $\bar{m} = p$.

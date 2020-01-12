@@ -1,0 +1,48 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{3.20}
+
+
+The canonical-correlation problem is:
+\begin{eqnarray*}
+    u_m, v_m & = & \textrm{argmax}_{u, v} \textrm{Corr}^2 \left( \mathbf{Y} u, \mathbf{X} v \right)
+    =  \textrm{argmax}_{u, v} \frac{\left( u ^T \mathbf{Y}^T \mathbf{X} v \right)^2}{ \left[ \left( u^T \mathbf{Y}^T \mathbf{Y} u  \right) \left( v^T \mathbf{X}^T \mathbf{X} v \right) \right] ^{1/2}}\\
+    0 & = & u^T \mathbf{Y}^T \mathbf{Y} u_1 = \ldots = u ^T \mathbf{Y}^T \mathbf{Y} u_{m - 1} \\
+    0 & = & v^T \mathbf{X}^T \mathbf{X} v_1 = \ldots = v^T \mathbf{Y}^T \mathbf{Y} v_{m - 1}
+\end{eqnarray*}
+The maximizand and the constraints are invariant under rescaling of $u, v$, so without loss of generality we can set $u ^T \mathbf{Y}^T \mathbf{Y} u = v^T \mathbf{X}^T \mathbf{X} v = 1$:
+\begin{eqnarray*}
+    u_m, v_m & = & \textrm{argmax}_{u, v} \left( u ^T \mathbf{Y}^T \mathbf{X} v \right)^2 \\
+    1 & = &u ^T \mathbf{Y}^T \mathbf{Y} u = v^T \mathbf{X}^T \mathbf{X} v \\
+    0 & = & u^T \mathbf{Y}^T \mathbf{Y} u_1 = \ldots = u ^T \mathbf{Y}^T \mathbf{Y} u_{m - 1} \\
+    0 & = & v^T \mathbf{X}^T \mathbf{X} v_1 = \ldots = v^T \mathbf{Y}^T \mathbf{Y} v_{m - 1}
+\end{eqnarray*}
+Flipping the relative sign of $u$ and $v$ does not change the constraints but
+flips the sign of $u ^T \mathbf{Y}^T \mathbf{X} v$, so without loss of generality
+we can remove the square in the first equation:
+\begin{eqnarray*}
+    u_m, v_m & = & \textrm{argmax}_{u, v} \left( u ^T \mathbf{Y}^T \mathbf{X} v \right)
+\end{eqnarray*}
+This completes the first part of the exercise. Now let:
+\begin{eqnarray*}
+    A & \equiv & \left( \mathbf{Y}^T \mathbf{Y} \right)^{-1/2} \left( \mathbf{Y}^T \mathbf{X} \right) \left( \mathbf{X} ^T \mathbf{X} \right)^{-1/2} = U ^{\star} D ^{\star} V^{\star T}\\
+    && U ^{\star} \in \mathbb{R}^{K, q}, \quad V ^{\star} \in \mathbb{R}^{p, q}, \quad q \leq \min{(p, K)}\\
+    &&U ^{\star T} U ^{\star} = \mathbb{I}_q, \quad V ^{\star T} V ^{\star} = \mathbb{I}_q\\
+    && D ^{\star}_{jj} > 0\quad \forall\; j = 1, \ldots, q
+\end{eqnarray*}
+We further assume that the eigenvalues of $D ^{\star}$ are all distinct and sorted decreasingly to simplify the discussion:
+\begin{eqnarray*}
+    D ^{\star}_{11} > D  ^{\star}_{22} > \ldots > D ^{\star}_{qq} > 0
+\end{eqnarray*}
+Denoting
+$\Sigma_X \equiv \mathbf{X}^T \mathbf{X}$, $\Sigma_Y \equiv \mathbf{Y}^T \mathbf{Y}$, we have:
+\begin{eqnarray}\nonumber
+u_m, \;v_m & = & \argmax_{\substack{u, v \\ u^T \Sigma_X u = 1, \quad v^T \Sigma_Y v = 1 \\ u^T \Sigma_X u_1 =\; \ldots\; = \; u^T \Sigma_X u_{m- 1} \;=\;0 \\ v^T \Sigma_Y v_1\;=\;\ldots\; = \;v^T \Sigma_Y v_{m- 1}\;=\;0}} \left( u^T \mathbf{Y}^T \mathbf{X} v \right) = \Sigma_Y^{-1/2} u_m ^{\star}, \;\Sigma_X^{-1/2} v_m ^{\star} \\
+u_m ^{\star}, \; v_m ^{\star} & = & \argmax_{\substack{u ^{\star}, v ^{\star} \\ || u ^{\star}||\;=\;|| v ^{\star} ||\;= 1 \\ u ^{\star T} u ^{\star}_1\;=\; \ldots\; = \;u ^{\star T} u ^{\star}_{m - 1}\;=\;0 \\ v ^{\star T} v ^{\star}_1\;=\; \ldots\; = \;v ^{\star T} v ^{\star}_{m - 1}\;=\;0}} \left( u ^{\star T} U ^{\star} D ^{\star} V^{\star T} v ^{\star} \right) \label{eq:3p20_0}
+\end{eqnarray}
+We can prove recursively that $u ^{\star}_n = \pm U ^{\star}_n$ and $v ^{\star}_n = \pm V ^{\star}_n$ with a common relative sign. Assuming that this is true for $n = 1, \ldots, m - 1$, one can see that for any pair $(u ^{\star}, v ^{\star})$ which maximizes (\ref{eq:3p20_0}), $u ^{\star}$ must belong to the span of $U ^{\star}_{m}, \ldots, U ^{\star}_{q}$ and similarly for $v ^{\star}$ with $V ^{\star}_m \ldots, V ^{\star}_q$. This is because, on the one hand, only the orthogonal projection of $u ^{\star}_m$ on $U ^{\star}_1, \ldots, U ^{\star}_q$ contributes to the maximizand and, on the other hand, the inductive hypothesis requires $u ^{\star}_m$ to be orthogonal to $U ^{\star}_1, \ldots, U ^{\star}_{m - 1}$. Hence, we can write:
+\begin{eqnarray*}
+    u_m ^{\star}, \; v_m ^{\star} & = & U ^{\star}_{m\rightarrow q} \alpha_m ^{\star}, \; V ^{\star}_{m\rightarrow q} \beta_m ^{\star} \\
+    \alpha_m ^{\star}, \; \beta_m ^{\star} & = & \argmax_{\substack{\alpha, \beta \\ ||\alpha|| = ||\beta|| = 1}} \left( \alpha ^{\star T} D ^{\star}_{m\rightarrow q} \beta ^{\star} \right)
+\end{eqnarray*}
+where $U ^{\star}_{m \rightarrow q}$ is the submatrix obtained by taking columns $m$ through $q$ of $U ^{\star}$, and similarly for $V ^{\star}$. This last bit of maximization can be carried out explicitly using Lagrange multipliers, to show that $\alpha ^{\star}_m = \beta ^{\star}_m = \left( \pm 1, 0, \ldots, 0 \right)$, i.e. $u ^{\star}_m = \pm U ^{\star}_m$, $v ^{\star}_m = \pm V ^{\star}_m$ with a common sign.

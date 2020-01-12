@@ -1,0 +1,29 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{3.7}
+
+
+This is almost equivalent to (\ref{3p6_e1}), which was derived in the previous exercise.
+The only difference is the presence of the constant $\beta_0$. In the absence of a prior for $\beta_0$,
+the expression in the exercise:
+\begin{eqnarray*}
+    \sum_{i=1}^N \left( y_i -\beta_0 \sum_j x_{ij} \beta_j \right)^2 + \lambda \sum_j \beta_j^2
+\end{eqnarray*}
+is not a valid log-likelihood for $\beta \equiv (\beta_j)_{j=1,\ldots,p}$, since $\beta_0$ remains
+unspecified. Two possibilities come to mind: first, that $\beta_0$ is deterministic ($\tau_0 = 0$) 
+and known in advance, in which case (\ref{3p6_e1}) yields the results in the exercise
+when we replace $\mathbf{y}$ by $\mathbf{y} - \beta_0$. 
+
+The second, more likely possibility is that we have no prior on $\beta_0$. This can be modelled as
+a gaussian prior with $\tau_0 \rightarrow \infty$, in which case we can repeat the steps of the 
+previous exercise to get:
+\begin{eqnarray*}
+    l_{posterior}(\beta, \beta_0 | \mathbf{y}) = c - \frac{1}{2 \tau_0^2} \beta_0^2 - \frac{1}{2 \tau^2} \beta^T \beta - \frac{1}{2 \sigma^2} \left( \mathbf{y} - \beta_0 - \mathbf{X} \beta \right)^T \left( \mathbf{y}- \beta_0 - \mathbf{X} \beta \right)
+\end{eqnarray*}
+Since we are interested in the posterior distribution for $\beta$, we should integrate over $\beta_0$ the exponential of $l_{posterior}(\beta, \beta_0 | \mathbf{y})$. As $\tau_0 \rightarrow \infty$, one can
+show that upon integration:
+\begin{eqnarray*}
+    l_{posterior}(\beta | \mathbf{y}) & = & c(\mathbf{y}) - \frac{1}{2 \tau^2} \beta^T \beta - \frac{1}{2 \sigma^2} \left( \mathbf{y} - \mathbf{X} \beta \right)^T \left( \mathbb{I} - \frac{e e^T}{N} \right)\left( \mathbf{y}  - \mathbf{X} \beta \right) \\
+    & = & c(\mathbf{y}) - \frac{1}{2 \tau^2} \beta^T \beta - \frac{1}{2 \sigma^2} \left( \mathbf{y}_c - \mathbf{X}_c \beta \right)^T \left( \mathbf{y}_c  - \mathbf{X}_c \beta \right)
+\end{eqnarray*}
+where $\mathbf{y}_c$ and $\mathbf{X}_c$ are the centered versions of $\mathbf{y}$ and $\mathbf{X}$.

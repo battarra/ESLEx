@@ -1,0 +1,69 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{3.8}
+
+We begin by proving that $\mathbf{Q}_2$ is the 'Q' matrix in
+the QR decomposition of $\tilde{\mathbf{X}}$.
+Denote $(\mathbf{q}_0 = \mathbf{e}, \mathbf{q}_1, \ldots, \mathbf{q}_p)$ the 
+columns of $\mathbf{Q}$, the matrix appearing in the QR decomposition $\mathbf{X}$. The matrix $\mathbf{Q}_2$ has columns $(\mathbf{q}_1, \ldots, 
+\mathbf{q}_{p})$. The centered matrix $\tilde{\mathbf{X}}$ can be written as:
+
+\begin{equation}
+\tilde{\mathbf{X}} = \left(\mathbf{X} - \frac{1}{N} \mathbf{e}\, \mathbf{e}^T\mathbf{X}\right) E_{p+1, p}
+\end{equation}
+where $E_{p + 1, p}$ is the $(p + 1) \times p$ matrix containing
+an identity block starting at position $(1, 0)$, so as to remove
+the first column of the matrix on its left.
+Replacing the QR decomposition of $\mathbf{X}$ we get:
+\begin{equation}
+\tilde{\mathbf{X}} = \left(\mathbb{I}_{p+1, p + 1} - \frac{1}{N} \mathbf{e}\,\mathbf{e}^T\right) \mathbf{Q}\,R\, E_{p+1, p}
+\end{equation}
+Since $\mathbf{q}_0 = \mathbf{e}$ and the remaining columns of $\mathbf{q}$
+are orthogonal to $\mathbf{e}$ as per the Gram-Schmidt procedure, the first
+term on the r.h.s. has the effect of multiplying by zero the first column of
+$\mathbf{Q}$ while leaving the remaining columns $\mathbf{Q}_2$ untouched:
+\begin{equation}
+\tilde{\mathbf{X}} = \mathbf{Q}_2\, E_{p, p+1} \,R\, E_{p+1, p}
+\end{equation}
+where $E_{p, p+1}$ is the $p \times (p + 1)$ matrix containing an identity
+block starting at index $(0, 1)$. The matrix $E_{p, p+1} \,R\, E_{p+1, p}$
+is nothing but the $1$ to $p + 1$ submatrix of $R$, which is still upper diagonal.
+This proves that $\mathbf{Q}_2$ is the 'Q' matrix in the QR decomposition of
+$\tilde{\mathbf{X}}$.
+
+Let now $\tilde{\mathbf{X}} = UDV^T$. Since $DV^T$ is a non-singular $p \times p$
+matrix, the columns of $U$ must span the same subspace as the columns of both
+$\tilde{\mathbf{X}}$ and $\mathbf{Q}_2$. From now on we can drop both the tildes
+and the subscript, since both the QR and SVD decompositions are performed
+on the centered matrix.
+
+For the second part of the question we note that, if the columns of 
+$\mathbf{X}$ are mutually orthogonal, the QR decomposition is also
+an SVD decomposition, because the $R$ matrix can be taken to be diagonal:
+
+\begin{eqnarray*}
+    \mathbf{X} & = & \mathbf{Q} D \\
+    D_{kk} & = & ||\mathbf{x}_k|| \\
+    \mathbf{Q}^T \mathbf{Q} & = & \mathbb{I}_p
+\end{eqnarray*}
+Since the SVD is unique\footnote{Here we suppose that the eigenvalues of
+    the sample covariance matrix are all distinct.} up to shuffling and sign flip
+of the columns of $\mathbf{U}$, the matrix $\mathbf{Q}$ can be obtained from
+any of the versions of $\mathbf{U}$ using such operations. One can in fact show that 
+this is the only case in which the columns of $\mathbf{Q}$
+coincide those of $\mathbf{U}$. Suppose that:
+\begin{equation*}
+\mathbf{Q} = \mathbf{U}
+\end{equation*}
+By comparing the two decompositions one can easily show that:
+\begin{equation*}
+V = D^{-1} R
+\end{equation*}
+This equality requires $V$ to be upper-diagonal besides being orthogonal. This
+implies\footnote{Any upper-diagonal orthogonal matrix $V$ is necessarily diagonal. To
+    show this, one can prove that $V^{-1}$ is also upper-diagonal and, being
+    equal to the transpose $V^T$, $V$ must be diagonal.} that $V$ is a diagonal, idempotent matrix, and:
+\begin{equation*}
+\mathbf{X}^T \mathbf{X} = V^T D ^2 V
+\end{equation*}
+is also diagonal, proving that the columns of $\mathbf{X}$ are mutually orthogonal.

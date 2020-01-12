@@ -1,0 +1,12 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{3.12}
+
+
+Denote by $\mathbf{X}_a$ and $\mathbf{y}_a$ the matrices $\mathbf{X}$ and $\mathbf{y}$ after the indicated
+rows have been added. One has:
+\begin{eqnarray*}
+    \mathbf{X}_a^T \mathbf{X}_a & = & \left( \begin{array}{cc}  \mathbf{X}^T  & \sqrt{\lambda}\, \mathbb{I}  \end{array}\right) \left( \begin{array}{c} \mathbf{X} \\ \sqrt{\lambda}\, \mathbb{I} \end{array} \right) = \mathbf{X}^T \mathbf{X} + \lambda \mathbf{I}\, \mathbb{I} \\
+    \mathbf{X}_a^T \mathbf{Y}_a & = & \left( \begin{array}{cc}  \mathbf{X}^T  & \sqrt{\lambda}\, \mathbb{I}  \end{array}\right) \left( \begin{array}{c} \mathbf{y} \\ 0 \end{array} \right) = \mathbf{X}^T \, \mathbf{y}
+\end{eqnarray*}
+therefore $\hat{\beta}_a = \left( \mathbf{X}_a^T \mathbf{X}_a \right)^{-1} \mathbf{X}_a^T \mathbf{y} =  \left( \mathbf{X}^T \mathbf{X} + \lambda \mathbf{I} \right)^{-1} \mathbf{X}^T \mathbf{y} = \hat{\beta}_{r}(\lambda)$.

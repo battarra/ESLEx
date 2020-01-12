@@ -1,0 +1,41 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{{\color{red}3.4}}
+
+Using the QR decomposition $\mathbf{X} = \mathbf{Q}_{Np} R_{pp}$, $\mathbf{Q}^T \mathbf{Q} = \mathbb{I}$, we see that:
+\begin{eqnarray*}
+    \hat{\beta} & = & \left( \mathbf{X} ^T \mathbf{X} \right)^{-1} \mathbf{X}^T \mathbf{y} = R^{-1} \mathbf{Q}^T \mathbf{y} \equiv R^{-1} \hat{\beta}^q\\
+    \hat{\beta}^q & \equiv & \mathbf{Q}^T \mathbf{y}
+\end{eqnarray*}
+This identity can be given a procedural interpretation via the Gram-Schmidt procedure.
+
+\begin{enumerate}
+    \item Start with $\hat{\beta} = 0$.
+    \item For $j = 1, \ldots, p$:
+    \begin{itemize}
+        \item Compute the $j$-th column $\mathbf{q}_j$ of Q, and the $j$-th column of R as per
+        the Gram-Schmit procedure. This corresponds to:
+        \begin{eqnarray*}
+            \mathbf{x}_j & = & R_{1j} \mathbf{q}_1 + \ldots + R_{jj} \mathbf{q}_j
+        \end{eqnarray*}
+        where $\mathbf{q}_j$ satisfies $\langle \mathbf{q}_i, \mathbf{q}_j \rangle = \delta_{ij}$.
+        \item Compute the regression coefficient $\hat{\beta}_j^q$ of $\mathbf{y}$ against $\mathbf{q}_j$
+        as $\langle \mathbf{q}_j, \mathbf{y} \rangle$. Notice that, the $\mathbf{q}_j$'s being orthogonal,
+        $\hat{\beta}_j^q$ is the coefficient of $\mathbf{q}_j$ in the regression of $\mathbf{y}$ against
+        all of the $\mathbf{q}_j$'s:
+        \begin{eqnarray*}
+            \mathbf{y} & \sim & \hat{\beta}^q_1\, \mathbf{q}_1 + \ldots + \hat{\beta}^q_p\, \mathbf{q}_p
+        \end{eqnarray*}
+        \item Compute the $j$-th column of $R^{-1}$ via backward substitution. Notice that this only 
+        requires the first $j$ columns of $R$, which are available at this stage. We have then:
+        \begin{eqnarray}
+        \label{3p4_e1}
+        \mathbf{q}_j & = & (R^{-1})_{1j}\,\mathbf{x}_1 + \ldots + (R^{-1})_{jj}\, \mathbf{x}_j
+        \end{eqnarray}
+        \item Update the coefficients of the original predictors according to the new term in the regression:
+        \begin{eqnarray*}
+            \hat{\beta}^q_j\, \mathbf{q}_j & = & \hat{\beta}^q_j \left( (R^{-1})_{1j}\,\mathbf{x}_1 + \ldots + (R^{-1})_{jj}\, \mathbf{x}_j \right)\\
+            \hat{\beta}_i &\rightarrow& \hat{\beta}_i + (R^{-1})_{ij}\,\hat{\beta}^q_j \quad i = 1,\ldots,j
+        \end{eqnarray*}
+    \end{itemize}
+\end{enumerate}

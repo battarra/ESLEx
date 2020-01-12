@@ -1,0 +1,33 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{3.1}
+
+We can use the results from Section 3.2.3 to prove the statement for the last predictor $j = p$. This generalizes for all other predictors, since neither the $z$-score nor the $F$-statistic depend on the order of predictors.
+
+Letting $ \mathbf{z}_j$ be the columns of $Z$ as in Eq. (3.30) in the text and assuming additive gaussian errors, 
+we have the following:
+\begin{eqnarray*}
+    \textrm{Var}(\hat{\beta}_p) & = & \frac{\sigma^2}{|| \mathbf{z}_p||^2} \qquad \textrm{(Eq. (3.29) in the text)}\\
+    \mathbf{z_j} \cdot \mathbf{z_k} & = & 0 \quad \textrm{for } j \neq k
+\end{eqnarray*}
+The $z$-score for predictor $j$ had been defined (see Eq. (3.12) in the text) as the ratio between the OLS value $\hat{\beta}_j$
+and the square root of the estimate of $\textrm{Var}(\hat{\beta}_p)$ obtained by replacing $\sigma$ with $\hat{\sigma}$, hence:
+\begin{eqnarray*}
+    z_p^2 & \equiv & \frac{\hat{\beta}_p^2}{\hat{\sigma}^2 / || \mathbf{z}_p||^2}
+\end{eqnarray*}
+Adopting the notation used to defined the $F$-score in Eq. (3.13) in the text:
+\begin{eqnarray*}
+    \hat{\sigma}^2 = \frac{\textrm{RSS}_1}{N - p - 1}
+\end{eqnarray*}
+where $\textrm{RSS}_1$ is the sum of squared residuals when the $p$-th predictor is included. We have then:
+\begin{eqnarray*}
+    z_p^2 = \frac{\hat{\beta}_p ^2\,|| \mathbf{z}_p||^2}{\textrm{RSS}_1 / (N - p - 1)}
+\end{eqnarray*}
+Since $\mathbf{z}_p$ is orthogonal to all other predictors, it is easy to check that:
+\begin{eqnarray*}
+    \textrm{RSS}_1 = \textrm{RSS}_0 - \hat{\beta}_p^2 \, || \mathbf{z}_p ||^2
+\end{eqnarray*}
+Hence, according to Eq. (3.13) in the text:
+\begin{eqnarray*}
+    F_{p} \equiv \frac{\textrm{RSS}_0 - \textrm{RSS}_1}{\textrm{RSS}_1 / (N - p - 1)} = \frac{\hat{\beta}_p^2 \, || \mathbf{z}_p ||^2}{\textrm{RSS}_1 / (N - p - 1)} = z_p^2
+\end{eqnarray*}

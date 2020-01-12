@@ -1,0 +1,17 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{2.9}
+
+Let's denote $R(Z_{tr}, Z_{te})$ the average of squared residuals for $Z_{te}$ using the OLS coefficients from $Z_{tr}$. Using the notation from the exercise:
+\begin{eqnarray*}
+    R_{tr}(\hat{\beta}) \equiv R(Z_{tr}, Z_{tr}), \qquad R_{te}(\hat{\beta}) \equiv R(Z_{tr}, Z_{te})
+\end{eqnarray*}
+It is easy to verify that the expected value $ \mathbb{E}_{Z_{te}} \left[ R(Z_{tr}, Z_{te}) \right]$ does not depend on $M \equiv |Z_{te}|$ (assuming the test examples are i.i.d.). This allows us to take $M = N$. Now, by definition of OLS estimates we have:
+\begin{eqnarray*}
+    R(Z_{te}, Z_{te}) \leq R(Z_{tr}, Z_{te})
+\end{eqnarray*}
+Now that $M = N$, the lhs has the same distribution as $R(Z_{tr}, Z_{tr})$, so when taking the expectation value:
+\begin{eqnarray*}
+    \mathbb{E}_{Z_{te}, Z_{tr}} \left[ R(Z_{tr}, Z_{tr}) \right] = \mathbb{E}_{Z_{te}, Z_{tr}} \left[ R(Z_{te}, Z_{te}) \right] \leq \mathbb{E}_{Z_{te}, Z_{tr}} \left[ R(Z_{tr}, Z_{te})  \right]
+\end{eqnarray*}
+which proves the assertion.

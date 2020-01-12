@@ -1,0 +1,43 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{3.16}
+
+
+When $\mathbf{X}$ has orthonormal colums:
+\begin{eqnarray}
+\hat{\beta}_j & = & \mathbf{y}^T \mathbf{x}_j \\
+\label{3p16_e0}
+RSS(\beta) & = & ||\mathbf{y}||^2 - 2 \beta \cdot \hat{\beta} + ||\beta||^2
+\end{eqnarray}
+Hence:
+\begin{itemize}
+    \item \textbf{Best subset:} Minimizing (\ref{3p16_e0}) for a subset of active
+    predictors $\mathcal{S} \subseteq \left\{ 1, \ldots, p \right\}$ one can easily
+    see that the coefficient of predictor $\mathbf{x}_j$ is always $\hat{\beta}_j$
+    no matter which subset is being considered. Also:
+    \begin{eqnarray*}
+        RSS(\hat{\beta}, \mathcal{S}) = ||\mathbf{y}||^2 - \sum_{j \in \mathcal{S}} \hat{\beta}_j^2
+    \end{eqnarray*}
+    For fixed $M = |\mathcal{S}|$, this quantity is minimized when $\mathcal{S}$ contains
+    the predictors corresponding to the $M$ largest $|\hat{\beta}_j|$, which proves
+    the first formula in the table.
+    \item \textbf{Ridge:} Using (\ref{3p16_e0}):
+    \begin{eqnarray*}
+        RSS(\beta, \lambda) \equiv RSS(\beta) + \lambda ||\beta||^2 = ||\mathbf{y}||^2 - 2 \beta \cdot \hat{\beta} + \left( 1 + \lambda \right)||\beta||^2
+    \end{eqnarray*}
+    The minimum of this quantity is reached for $\hat{\beta}_{\lambda} = \hat{\beta} / (1 + \lambda)$.
+    \item \textbf{Lasso: } Using again (\ref{3p16_e0}):
+    \begin{eqnarray*}
+        RSS(\beta, \lambda) \equiv RSS(\beta) + 2 \lambda ||\beta||_1 = ||\mathbf{y}||^2 - 2 \beta \cdot \hat{\beta} + ||\beta||^2 + 2 \lambda ||\beta||_1
+    \end{eqnarray*}
+    Notice that the $\beta$-dependent part of this expression can be written as a sum
+    of $p$ terms, each containing only one of the $\beta_j$'s. Each term can thus be
+    minimized separately:
+    \begin{eqnarray*}
+        \textrm{argmin}_\beta \left( - 2 \hat{\beta}_j \beta + \beta^2 + 2 \lambda |\beta|   \right)
+    \end{eqnarray*}
+    The solution is easily seen to be:
+    \begin{eqnarray*}
+        \hat{\beta}_\lambda = \textrm{sign}(\hat{\beta}_j) \left( |\hat{\beta}_j| - \lambda \right)_+
+    \end{eqnarray*}
+\end{itemize}
