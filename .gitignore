@@ -17,6 +17,8 @@
 **/*.synctex.gz
 **/*.bib.bak
 **/*.bib.sav
+**/*.bbl
+**/*.blg
 
 # LaTeX pdf
 notes/Tibt.pdf
