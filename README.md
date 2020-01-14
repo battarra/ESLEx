@@ -10,6 +10,6 @@ by Jupyter notebooks for those exercises that require code (`/notebooks/`).
 Exercises solved so far (*italics* for exercises over which I have doubts, **bold** for
 those that are accompanied by a notebook):
 
-- Chapter 2: 1--9: *2*, *7*
-- Chapter 3: 1--25: **2**, *4*, ***17***
+- Chapter 2: complete - *2*, *7*
+- Chapter 3: 1--27 - **2**, *4*, ***17***
 
