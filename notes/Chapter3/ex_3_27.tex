@@ -1,3 +1,99 @@
 %!TEX root = ../Tibt.tex
 
 \exercise{3.27}
+
+The KKT conditions apply to solutions of convex optimization problems:\footnote{See e.g.
+    \texttt{https:\/\/ocw.mit.edu/courses/sloan-school-of-management\/15\-097\-prediction\-machine-learning\-and\-statistics\-spring\-2012/lecture-notes\/MIT15\_097S12\_lec11.pdf}}:
+\begin{eqnarray}\label{eq:3p27_0}
+    \argmax_{\substack{\beta\\f_i(\beta) = 0, \; i = 1, \ldots, M \\
+    g_a(\beta) \leq 0, \; a = 1, \ldots, N}} \, L(\beta)
+\end{eqnarray}
+The Lagrange dual function is:
+\begin{equation*}
+L(\beta, \eta, \lambda) \equiv L(\beta) + \sum_i \eta_i \, f_i(\beta) + 
+    \sum_a \lambda_a \, g_a(\beta)
+\end{equation*}
+and the KKT conditions read:
+\begin{eqnarray} \label{eq:3p27_kkt1}
+    g_a(\beta) & \leq & 0 \\
+    \lambda_a & \geq & 0 \\
+    \lambda_a \, g_a(\beta) & = & 0 \\ \label{eq:3p27_kkt4}
+    \frac{\partial L}{\partial \beta}(\beta, \eta, \lambda) & = & 0
+\end{eqnarray}
+
+The LASSO regression problem reads:
+\begin{eqnarray*}
+    \hat{\beta} = \argmin_\beta \left( L(\beta) + \lambda \sum_{a} |\beta_a|\right)
+\end{eqnarray*}
+where $L(\beta) \equiv \frac{1}{2}||\mathbf{y} - \mathbf{X} \beta||^2$.
+Now consider the following:
+\begin{equation}\label{eq:3p27_1}
+\hat{\beta}^+, \, \hat{\beta}^- \equiv \argmin_{\beta_a^+ \geq 0, \,\beta_a^- \geq 0} \left( L(\beta^+ - \beta^-) + \lambda \sum_{a} (\beta_a^+ + \beta_a^-)\right)
+\end{equation}
+It is fairly easy to show that:
+\begin{itemize}
+    \item For each $a$, either $\hat{\beta}_a^+ = 0$ or $\hat{\beta}_a^- = 0$,
+      so that $\hat{\beta}_a^+ + \hat{\beta}_a^- = |\hat{\beta}_a^+ - \hat{\beta}_a^-|$.
+    \item $\hat{\beta} = \hat{\beta}^+ - \hat{\beta}^-$.
+\end{itemize}
+For the first point, notice that subtracting from both $\hat{\beta}_a^+$ and 
+$\hat{\beta}_a^-$ the smallest number between the two does not change the first
+term in the minimizand \eqref{eq:3p27_1}, but decreases the second. For the second,
+it is sufficient to notice that any $\beta$ can be written as a difference
+between a positive and negative part.
+
+The minimization problem \eqref{eq:3p27_1} is of the general form \eqref{eq:3p27_0}\footnote{Quadratic $L$ with affine inequality constraints is one of the cases
+    in which strong duality is guaranteed, see e.g. \cite{Boyd2004}, Chapter 5.}.
+The dual lagrangian reads like in the text:
+\begin{equation*}
+L(\beta, \lambda^+, \lambda^-) = L(\beta^+ - \beta^-)
+    + \lambda \sum_a (\beta_a^+ + \beta_a^-) 
+    - \sum_a \left(\lambda_a^+ \beta_a^+ + \lambda_a^- \beta_a^-\right)
+\end{equation*}
+The KKT conditions can be derived in a straightforward manner from 
+\eqref{eq:3p27_kkt1} - \eqref{eq:3p27_kkt4}:
+\begin{eqnarray}
+    \beta_a^\pm & \geq & 0 \\
+    \lambda_a^\pm & \geq & 0 \\ \label{eq:3p27_kkt3_applied}
+    \lambda_a^\pm \, \beta_a^\pm & = & 0\\ 
+    \frac{\partial}{\partial \beta_a} L(\beta^+ - \beta^-) & = & \mp (\lambda - \lambda_a ^\pm)
+\end{eqnarray}
+which proves (a). From the two versions last equation we have:
+\begin{eqnarray} \label{eq:3p27_2}
+    (+):&&  \frac{\partial L}{\partial \beta_a} = - \lambda + \lambda_a^+ \geq - \lambda \\ \label{eq:3p27_3}
+    (-):&&  \frac{\partial L}{\partial \beta_a} = \lambda - \lambda_a^- \leq \lambda
+\end{eqnarray}
+hence $|\frac{\partial L}{\partial \beta_a}| \leq \lambda$, which automatically
+proves the first case in the text ($\lambda = 0$). Supposing now that $\lambda > 0$
+and $\beta_a^+ > 0$, \eqref{eq:3p27_kkt3_applied} implies $\lambda_a^+ = 0$. From
+\eqref{eq:3p27_2} we deduce $\frac{\partial L}{\partial \beta_a} = -\lambda < 0$,
+hence $\lambda_a^- > 0$ from \eqref{eq:3p27_3} and $\beta_a^- = 0$ from
+\eqref{eq:3p27_kkt3_applied}. The $\beta_a^- > 0$ case can be dealt with similarly.
+Therefore, if $\beta_a \neq 0$:
+\begin{equation} \label{eq:3p27_4}
+\frac{\partial L}{\partial \beta_a} = - \mathbf{x}_a^T \left(\mathbf{y} - \mathbf{X} \beta\right) = - \textrm{sign}(\beta_a) \, \lambda
+\end{equation}
+If the predictors and the response are standardised, this implies:
+\begin{equation*}
+\textrm{Corr}(\mathbf{x}_a, \mathbf{y} - \mathbf{X} \beta) = \textrm{sign}(\beta_a)\frac{\lambda}{N}
+\end{equation*}
+which completes part (b). As for part (c), as long as the set of active predictors
+does not change, the set of one can pack all the corresponding equations
+\eqref{eq:3p27_4} as:
+\begin{equation*}
+\mathbf{X}_\mathcal{A}^T \mathbf{y} - \mathbf{X}_\mathcal{A}^T \mathbf{X}_\mathcal{A}
+\beta_\mathcal{A} = s\, \lambda
+\end{equation*}
+where $s$ is the vector of $\textrm{sign}(\beta_a), \; a \in \mathcal{A}$. Hence:
+\begin{equation*}
+\beta_\mathcal{A}(\lambda) = \left(\mathbf{X}_\mathcal{A}^T \mathbf{X}_\mathcal{A}\right)^{-1} \left(\mathbf{X}_\mathcal{A}^T \mathbf{y} - s \lambda\right)
+\end{equation*}
+which is indeed linear in $\lambda$. The derivative of $\beta_\mathcal{A}$ with respect to $\lambda$ can be shown to be proportional to the OLS coefficients of the regression of the residuals $\mathbf{r}(\lambda_1) \equiv \mathbf{y} - \mathbf{X}_\mathcal{A} \beta(\lambda_1)$
+against the active predictors, in accordance with the LAR/LASSO correspondence
+established in the text\footnote{Notice the sign difference: LAR moves in the direction of increasing coefficients magnitude, which is the opposite as
+    increasing $\lambda$}:
+\begin{eqnarray*}
+    \eqref{eq:3p27_4}: && \quad \mathbf{X}_\mathcal{A}^T\, \mathbf{r}(\lambda_1) = s\, \lambda_1 \\ &&6
+    - \beta_\mathcal{A}'(\lambda) = \left(\mathbf{X}_\mathcal{A}^T \mathbf{X}_\mathcal{A}\right)^{-1} s \propto \left(\mathbf{X}_\mathcal{A}^T \mathbf{X}_\mathcal{A}\right)^{-1} \mathbf{X}_\mathcal{A}^T\, \mathbf{r}(\lambda_1)
+    \end{eqnarray*}
+

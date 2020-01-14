@@ -1,20 +1,6 @@
 % Encoding: UTF-8
 
 @Book{Murray1982,
-  title   = {{Practical optimization, Philip E. Gill, Walter Murray and Margret H. Wright, Academic Press Inc. (London) Limited, 1981. No. of pages: 401. Price {\textsterling}19.20, \$46.50. ISBN: 0.12.283950.1}},
-  year    = {1982},
-  author  = {{Ricketts}, R.~E.},
-  volume  = {18},
-  number  = {6},
-  month   = {Jun},
-  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
-  adsurl  = {https://ui.adsabs.harvard.edu/abs/1982IJNME..18..954R},
-  doi     = {10.1002/nme.1620180612},
-  journal = {International Journal for Numerical Methods in Engineering},
-  pages   = {954-954},
-}
-
-@Book{Murray1982,
   title      = {Practical optimization},
   publisher  = {Academic Press Inc. [Harcourt Brace Jovanovich Publishers]},
   year       = {1981},
@@ -31,6 +17,15 @@
   mrreviewer = {N. N. Abdelmalek},
   pages      = {xvi+401},
   timestamp  = {2008-09-04T16:51:25.000+0200},
+}
+
+@Book{Boyd2004,
+  title     = {Convex Optimization},
+  publisher = {Cambridge University Press},
+  year      = {2004},
+  author    = {Boyd, Stephen and Vandenberghe, Lieven},
+  address   = {USA},
+  isbn      = {0521833787},
 }
 
 @Comment{jabref-meta: databaseType:bibtex;}

@@ -19,4 +19,13 @@
   timestamp  = {2008-09-04T16:51:25.000+0200},
 }
 
+@Book{B,
+  title     = {Convex Optimization},
+  publisher = {Cambridge University Press},
+  year      = {2004},
+  author    = {Boyd, Stephen and Vandenberghe, Lieven},
+  address   = {USA},
+  isbn      = {0521833787},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}

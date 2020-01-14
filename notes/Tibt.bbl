@@ -1,5 +1,10 @@
 \begin{thebibliography}{1}
 
+\bibitem{Boyd2004}
+Stephen Boyd and Lieven Vandenberghe.
+\newblock {\em Convex Optimization}.
+\newblock Cambridge University Press, USA, 2004.
+
 \bibitem{Murray1982}
 Philip~E. Gill, Walter Murray, and Margaret~H. Wright.
 \newblock {\em Practical optimization}.
