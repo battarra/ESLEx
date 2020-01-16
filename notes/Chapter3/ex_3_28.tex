@@ -1,3 +1,74 @@
 %!TEX root = ../Tibt.tex
 
 \exercise{3.28}
+
+Denote $\mathbf{X}_{\setminus j}$ the matrix of predictor values except predictor
+$\mathbf{x}_j$. The modified LASSO minimization problem with the added predictor copy
+reads:
+\begin{eqnarray} \label{eq:3p28_0}
+B^\star: &&\argmin_{\substack{\beta_{\setminus j}, \beta_j, \beta_j^\star \\
+        ||\beta_{\setminus j}||_1 + |\beta_j| + |\beta_j^\star| \leq t}}
+    l(\beta_{\setminus j}, \beta_j + \beta_j^\star) \\
+&& l(\beta_{\setminus j}, \beta_j)  \equiv || \mathbf{y} - \mathbf{X}_{\setminus j} \beta_{\setminus j} - \beta_j \mathbf{x}_j||^2 
+\end{eqnarray}
+Denote $B^\star$ the set of solutions $(\beta_{\setminus j}, \beta_j, \beta_j^\star)$ of \eqref{eq:3p28_0}, and
+$B$ the set of solutions $(\beta_{\setminus j}, \beta_j)$ to the ordinary LASSO problem with the
+same parameter $t$:
+\begin{eqnarray} \label{eq:3p28_1}
+B: &&\argmin_{\substack{\beta_{\setminus j}, \beta_j \\
+        ||\beta_{\setminus j}||_1 + |\beta_j| \leq t}}
+l(\beta_{\setminus j}, \beta_j)
+\end{eqnarray}
+First, we note that:
+\begin{equation}\label{eq:3p28_3}
+\min_{\substack{\beta_{\setminus j}, \beta_j, \beta_j^\star \\
+        ||\beta_{\setminus j}||_1 + |\beta_j| + |\beta_j^\star| \leq t}}
+l(\beta_{\setminus j}, \beta_j + \beta_j^\star) \geq \min_{\substack{\beta_{\setminus j}, \beta_j \\
+        ||\beta_{\setminus j}||_1 + |\beta_j| \leq t}}
+l(\beta_{\setminus j}, \beta_j)
+\end{equation}
+Indeed, one can trivially re-express the r.h.s. as:
+\begin{equation} \label{eq:3p28_2}
+\min_{\substack{\beta_{\setminus j}, \beta_j \\
+        ||\beta_{\setminus j}||_1 + |\beta_j| \leq t}}
+l(\beta_{\setminus j}, \beta_j) = 
+\min_{\substack{\beta_{\setminus j}, \beta_j \\
+        ||\beta_{\setminus j}||_1 + |\beta_j + \beta_j^\star| \leq t}}
+l(\beta_{\setminus j}, \beta_j + \beta_j^\star) 
+\end{equation}
+Since $|\beta_j + \beta_j^\star| \leq |\beta_j| + |\beta_j^\star|$,
+the modified LASSO problem on the left hand-side of \eqref{eq:3p28_3} is
+just a more constrained version of the original one. Also, since $\beta = (\beta_{\setminus j}, \beta_j, \beta_j^\star= 0)$ respects the modified LASSO constraint whenever $(\beta_{\setminus j}, \beta_j)$ respects the original one, we can conclude that:
+\begin{equation} \label{eq:3p28_4}
+\min_{\substack{\beta_{\setminus j}, \beta_j, \beta_j^\star \\
+        ||\beta_{\setminus j}||_1 + |\beta_j| + |\beta_j^\star| \leq t}}
+l(\beta_{\setminus j}, \beta_j + \beta_j^\star) = \min_{\substack{\beta_{\setminus j}, \beta_j \\
+        ||\beta_{\setminus j}||_1 + |\beta_j| \leq t}}
+l(\beta_{\setminus j}, \beta_j)
+\end{equation}
+Using this result:
+\begin{itemize}
+    \item If $\beta = (\beta_{\setminus j}, \beta_j, \beta_j^\star)$ is
+      such that $(\beta_{\setminus j}, \beta_j + \beta_j^\star) \in B$
+      and $\beta$ respects the modified LASSO constraint, then
+      necessarily $\beta \in B^\star$, otherwise the l.h.s. in \eqref{eq:3p28_4}
+      would be smaller than the r.h.s..
+    \item Reasoning in the same way, it is easy to see that if $\beta = (\beta_{\setminus j}, \beta_j, \beta_j^\star) \in B^\star$, then $(\beta_{\setminus j}, \beta_j + \beta_j^\star) \in B$.
+\end{itemize}
+This allows us to conclude that:
+\begin{equation}
+B^\star = \left\{\beta = (\beta_{\setminus j}, \beta_j, \beta_j^\star): \;
+  (\beta_{\setminus j}, \beta_j + \beta_j^\star) \in B,\;
+  ||\beta_{\setminus j}||_1 + |\beta_j| + |\beta_j^\star| \leq t  
+\right\}
+\end{equation}
+In particular, if the original LASSO solution is unique and such that:
+\begin{equation*}
+||\hat{\beta}_{\setminus j}||_1 + |\hat{\beta}_j| = t
+\end{equation*}
+the set of solutions of the modified LASSO is:
+\begin{equation*}
+B^\star = \left\{\beta = \left(\hat{\beta}_{\setminus j}, \beta_j, \beta_j^\star\right): \beta_j + \beta_j^\star = \hat{\beta}_j, \;
+\beta_j \cdot \beta_j^\star \geq 0\right\}
+\end{equation*}
+The last condition ensures that $|\beta_j| + |\beta_j^\star| = |\hat{\beta}_j|$.
