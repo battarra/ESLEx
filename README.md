@@ -11,5 +11,5 @@ Exercises solved so far (*italics* for exercises over which I have doubts, **bol
 those that are accompanied by a notebook):
 
 - Chapter 2: complete - *2*, *7*
-- Chapter 3: 1--29 - **2**, *4*, ***17***
+- Chapter 3: complete - **2**, *4*, ***17***
 

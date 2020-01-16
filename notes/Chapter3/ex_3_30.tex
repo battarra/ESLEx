@@ -1,3 +1,18 @@
 %!TEX root = ../Tibt.tex
 
 \exercise{3.30}
+
+Consider the augmented matrices $\mathbf{y}'$, $\mathbf{X}'$ obtained by:
+\begin{itemize}
+    \item $\mathbf{y}'$: adding $p$ zero elements (rows) to $\mathbf{y}$;
+    \item $\mathbf{X}'$: adding a $p \times p$ diagonal block at the bottom
+    of $\mathbf{X}$, with diagonal elements $\sqrt{\lambda \alpha}$.
+\end{itemize}
+One can easily see that:
+\begin{equation*}
+|| \mathbf{y}' - \mathbf{X}' \beta||^2 = 
+    || \mathbf{y} - \mathbf{X} \beta||^2 + \lambda\,\alpha ||\beta||^2
+\end{equation*}
+Therefore, the $(\lambda, \alpha)$ elastic-net problem on $\mathbf{X}, \mathbf{y}$
+is the same as an ordinary $\lambda \cdot (1 - \alpha)$ LASSO problem
+on $\mathbf{X}', \mathbf{y}'$.
