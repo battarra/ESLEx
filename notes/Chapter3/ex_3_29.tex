@@ -1,3 +1,22 @@
 %!TEX root = ../Tibt.tex
 
 \exercise{3.29}
+
+Denote $\mathbf{X}^{(m)}$ the matrix containing $m$ copies of $\mathbf{x}$:
+\begin{equation*}
+\mathbf{X}^{(m)} = \mathbf{x}\, e_m^T
+\end{equation*}
+The Ridge regression coefficients are:
+\begin{eqnarray*}
+\hat{\beta}(\lambda) & = & \left(\mathbf{X}^{(m)\,T} \mathbf{X}^{(m)} + \lambda\right)^{-1}
+\mathbf{X}^{(m) \, T} \mathbf{y} \\
+& = & \left(||\mathbf{x}||^2 \, e_m \, e_m^T + \lambda\right)^{-1}
+e_m \,\mathbf{x}^T\mathbf{y} \\
+& = & \frac{1}{\lambda} \left(1 - \frac{e_m \, e_m^T}{m + \lambda / ||\mathbf{x}||^2}\right)e_m \,\mathbf{x}^T\mathbf{y} \\
+& = & \frac{||\mathbf{x}||^2}{m ||\mathbf{x}||^2 + \lambda}
+    \,\frac{\mathbf{x}^T \mathbf{y}}{||\mathbf{x}||^2} \, e_m = \frac{||\mathbf{x}||^2}{m ||\mathbf{x}||^2 + \lambda}
+    \,\hat{\beta}_{ols} \, e_m
+\end{eqnarray*}
+This result is in accordance with Eq. (3.44) in the text: the PCA decomposition
+of $\mathbf{X}^{(m)}$ contains a single non-zero component with eigenvalue
+$m\,||\mathbf{x}||^2$ and eigenvector $\mathbf{x} / ||\mathbf{x}||$.
