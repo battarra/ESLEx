@@ -12,4 +12,4 @@ those that are accompanied by a notebook):
 
 - Chapter 2: complete - *2*, *7*
 - Chapter 3: complete - **2**, *4*, ***17***
-
+- Chapter 4: 1-3

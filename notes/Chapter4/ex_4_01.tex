@@ -1,0 +1,11 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{4.1}
+
+Without loss of generality, the matrix $W$ can be assumed to be symmetric. As long
+as its eigenvalues are all zero, its square root is well-defined together with
+its inverse. Hence, using the change of variable $a \equiv W^{-1/2} b$:
+\begin{equation*}
+\max_{\substack{a^T W a = 1}} \, a^T B\, a = \max_{\substack{||b||^2 = 1}}
+    \, b^T \tilde{B}\, b, \quad \tilde{B} \equiv W^{-1/2} B W^{-1/2}
+\end{equation*}

@@ -1,0 +1,104 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{4.2}
+
+\subsection*{(a)}
+
+The linear discriminant functions are:
+
+\begin{eqnarray*}
+    \hat{\delta}_k(x) & = & x^T \hat{\Sigma}^{-1} \hat{\mu}_k - \frac{1}{2}\, \hat{\mu}_k ^T \hat{\Sigma}^{-1}  \hat{\mu}_k + \log\, \hat{\pi}_k \\
+    \hat{\pi}_k & = & N_k / N
+\end{eqnarray*}
+So (a) follows directly from $\hat{\delta}_2(x) > \hat{\delta}_1(x)$. 
+
+
+\subsection*{(b), (c), (d)}
+Let's denote $\mathbf{e}_{(1)}$ and $\mathbf{e}_{(2)}$ the one-hot variables associated
+to the labels $g$. The coefficients $\hat{\beta}$ of the OLS regression with the bias
+term included can be obtained by regressing $\mathbf{y}$ against the demeaned
+version of the original predictors:
+\begin{eqnarray*}
+    \hat{\beta} & = & \left(\mathbf{X}_{dm}^T \mathbf{X}_{dm}\right)^{-1} \,
+    \mathbf{X}_{dm}^T \mathbf{y} \\
+    \mathbf{X}_{dm} & \equiv &  \mathbf{X} - \mathbf{e} \, \hat{\mu}^T \\
+    & = & \mathbf{X} - (\mathbf{e}_{(1)} + \mathbf{e}_{(2)}) \, \hat{\mu}^T \\
+    \hat{\mu} & \equiv & \frac{1}{N} \mathbf{X}^T \mathbf{e}
+\end{eqnarray*}
+Notice that $\hat{\mu}$ is the vector of predictor means, regardless of the class.
+On the other hand, the LDA covariance matrix is obtained as:
+\begin{eqnarray*}
+    \hat{\Sigma} & = & \frac{1}{N - 2} \mathbf{X}_{r}^T \mathbf{X}_r
+\end{eqnarray*}
+where $\mathbf{X}_{r}$ are the values of predictors centered around the class
+averages:
+\begin{eqnarray*}
+    \mathbf{X}_{r} & = &  \mathbf{X} - \mathbf{e}_{(1)}\,\hat{\mu}_1^T - \mathbf{e}_{(2)}\,\hat{\mu}_2^T \\
+    \hat{\mu}_1 & \equiv & \frac{1}{N_1} \mathbf{X}^T \mathbf{e}_{(1)}\\
+    \hat{\mu}_2 & \equiv & \frac{1}{N_2} \mathbf{X}^T \mathbf{e}_{(2)}
+\end{eqnarray*}
+We have therefore:
+\begin{equation*}
+\mathbf{X}_{dm} = \mathbf{X}_r + \mathbf{e}_{(1)} \left(\hat{\mu}_1 - \hat{\mu}\right)^T
+ + \mathbf{e}_{(2)} \left(\hat{\mu}_2 - \hat{\mu}\right)^T
+\end{equation*}
+By construction, the residuals $\mathbf{X}_r$ are orthogonal to $\mathbf{e}_{(1)}$, 
+$\mathbf{e}_{(2)}$:
+\begin{equation*}
+\mathbf{X}_r^T \,\mathbf{e}_{(1)} = \mathbf{X}_r^T \,\mathbf{e}_{(2)} = 0
+\end{equation*}
+Also:
+\begin{eqnarray*}
+    \mathbf{e}_{(k)}^T\, \mathbf{e}_{(k)} & = & N_k \\
+    \mathbf{e}_{(1)}^T \mathbf{e}_{(2)} & = & 0 \\
+    \hat{\mu} & = & \frac{N_1}{N} \hat{\mu}_1 + \frac{N_2}{N} \hat{\mu}_2    
+\end{eqnarray*}
+Hence:
+\begin{eqnarray*}
+    \mathbf{X}_{dm}^T \mathbf{X}_{dm} & = & \mathbf{X}_r^T \mathbf{X}_r + 
+    N_1\,(\hat{\mu}_1 - \hat{\mu}) (\hat{\mu}_1 - \hat{\mu})^T + N_2\,(\hat{\mu}_2 - \hat{\mu}) (\hat{\mu}_2 - \hat{\mu})^T  \\
+    & = & (N - 2)\, \hat{\Sigma} + N_1 \, \left(\frac{N_2}{N} \hat{\mu}_1 - \frac{N_2}{N} \hat{\mu}_2\right) \left(\ldots\right) + N_2 \, \left(\frac{N_1}{N} \hat{\mu}_2 - \frac{N_1}{N} \hat{\mu}_1\right) \left(\ldots\right) \\
+    & = & (N - 2)\, \hat{\Sigma} + \frac{N_1\,N_2}{N^2} (N_1 + N_2) 
+        \left(\hat{\mu}_1 - \hat{\mu}_2\right)\left(\hat{\mu}_1 - \hat{\mu}_2\right)^T \\
+    & = & (N - 2)\, \hat{\Sigma} + \frac{N_1\,N_2}{N} 
+    \left(\hat{\mu}_2 - \hat{\mu}_1\right)\left(\hat{\mu}_2 - \hat{\mu}_1\right)^T
+\end{eqnarray*}
+Consider the general target encoding:
+\begin{equation*}
+\mathbf{y} = y_1\, \mathbf{e}_{(1)} + y_2\, \mathbf{e}_{(2)}
+\end{equation*}
+We have:
+\begin{eqnarray*}
+\mathbf{X}_{dm}^T \mathbf{y} & = & N_1\, y_1\, (\hat{\mu}_1 - \hat{\mu}) + N_2\, y_2\, (\hat{\mu}_2 - \hat{\mu}) \\
+& = & \frac{N_1}{N}\, y_1\, (N\,\hat{\mu}_1 - N_1 \hat{\mu}_1  - N_2 \hat{\mu}_2) + \frac{N_2}{N}\, y_2\, (N\,\hat{\mu}_2 - N_1 \hat{\mu}_1  - N_2 \hat{\mu}_2) \\
+& = & \frac{N_1 \, N_2}{N} \left(y_2 - y_1\right) \left(\hat{\mu}_2 - \hat{\mu}_1\right)
+\end{eqnarray*}
+Therefore:
+\begin{eqnarray*}
+    \hat{\beta} & = & \left((N - 2)\, \hat{\Sigma} + \frac{N_1\,N_2}{N} 
+    \left(\hat{\mu}_1 - \hat{\mu}_2\right)\left(\hat{\mu}_1 - \hat{\mu}_2\right)^T\right)^{-1} \frac{N_1 \, N_2}{N} \left(y_2 - y_1\right) \left(\hat{\mu}_2 - \hat{\mu}_1\right) \\
+    & = &  \left((N - 2)\, \hat{\Sigma} + \frac{N_1\,N_2}{N} 
+    \hat{\Sigma}_B\right) ^{-1} \frac{N_1 \, N_2}{N} \left(y_2 - y_1\right) \left(\hat{\mu}_2 - \hat{\mu}_1\right)     \\
+    \hat{\Sigma}_B & \equiv &  \left(\hat{\mu}_1 - \hat{\mu}_2\right)\left(\hat{\mu}_1 - \hat{\mu}_2\right)^T
+\end{eqnarray*}
+This proves (d) and, in particular, substituting $y_1 = - N / N_1$, $y_2 = N/N_2$
+yields the equation in the text. (c) is a direct consequence of this result.
+
+
+\subsection*{(e)}
+
+After predictor demeaning:
+\begin{equation*}
+\hat{f} = \hat{\beta}_0 + \hat{\beta}^T x_{dm}
+\end{equation*}
+the OLS value $\hat{\beta}_0$ is the sample average of the response, which
+is zero with the encoding indicated in the text. Therefore:
+\begin{eqnarray*}
+\hat{f} & = & \hat{\beta}^T \hat{\Sigma}^{-1}\left(x - \hat{\mu}\right) \\
+   & \propto & \left(\hat{\mu}_2 - \hat{\mu}_1\right)^T \hat{\Sigma}^{-1}\left(x - \frac{N_1}{N} \hat{\mu}_1 - \frac{N_2}{N} \hat{\mu}_2\right) \\
+   & = & x^T \hat{\Sigma}^{-1} \left(\hat{\mu}_2 - \hat{\mu}_1 \right) - 
+     \frac{N_2}{N} \hat{\mu}_2^T \hat{\Sigma}^{-1} \hat{\mu}_2 +
+     \frac{N_1}{N} \hat{\mu}_1^T \hat{\Sigma}^{-1} \hat{\mu}_1 + 
+     \frac{N_2 - N_1}{N} \hat{\mu}_1 ^T \hat{\Sigma}^{-1} \hat{\mu}_2
+\end{eqnarray*}
+This expression coincides with the one for LDA only when $N_1 = N_2$.

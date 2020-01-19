@@ -1,0 +1,86 @@
+%!TEX root = ../Tibt.tex
+
+\exercise{4.3}
+
+Denote $\mathcal{N}$ the diagonal matrix containing the sample counts
+for categories on the diagonal:
+\begin{equation*}
+\mathcal{N} = \mathbf{Y}^T\,\mathbf{Y}
+\end{equation*}
+The matrix $\mathcal{M}$ containing the sample averages $\hat{\mu}_1, \ldots,
+\hat{\mu}_K$ as columns can be written as:
+\begin{equation*}
+\mathcal{M} = \mathbf{X}^T \mathbf{Y} \mathcal{N}^{-1}
+\end{equation*} 
+The matrix $\mathbf{X}_{r}$ containing the values of predictors centered
+around the category averages is:
+\begin{equation*}
+\mathbf{X}_r = \mathbf{X} - \mathbf{Y} \mathcal{M}^T = \mathbf{X} - \mathbf{Y}
+   \mathcal{N}^{-1} \mathbf{Y}^T \mathbf{X}
+\end{equation*}
+By construction, the columns of $\mathbf{X}_r$ are demeaned:
+\begin{equation*}
+\mathbf{X}_r^T \mathbf{Y} = 0
+\end{equation*}
+Using these relationships, we deduce:
+\begin{eqnarray*}
+\Sigma_X \equiv \mathbf{X}^T \mathbf{X} & = & \mathbf{X}_r^T \mathbf{X}_r + \mathbf{X}^T \mathbf{Y}
+    \mathcal{N}^{-1} \mathbf{Y}^T \mathbf{Y} \mathcal{N}^{-1} \mathbf{Y}^T \mathbf{X} \\
+    & = & (N - K) \hat{\Sigma} + \mathbf{X}^T \mathbf{Y} \mathcal{N}^{-1} \mathbf{Y}^T \mathbf{X}
+\end{eqnarray*}
+Now consider the product:
+\begin{eqnarray*}
+   \Sigma_X \hat{\Sigma}^{-1} \mathbf{X}^T \mathbf{Y} & = &
+    \left( (N - K) \hat{\Sigma} + \mathbf{X}^T \mathbf{Y} \mathcal{N}^{-1} \mathbf{Y}^T\right) \hat{\Sigma}^{-1}\mathbf{X}^T \mathbf{Y} \\
+    & = & \mathbf{X}^T \mathbf{Y} \left((N - K) + \mathcal{N}^{-1} \mathbf{Y}^T
+        \hat{\Sigma}^{-1} \mathbf{X}^T \mathbf{Y}\right)
+\end{eqnarray*}
+Multiplying both sides by $\Sigma_X^{-1}$ on the left, and by $\left((N - K) + \mathcal{N}^{-1} \mathbf{Y}^T
+\hat{\Sigma}^{-1} \mathbf{X}^T \mathbf{Y}\right)^{-1}$ on the right, we obtain:
+\begin{eqnarray} \nonumber
+\hat{B} & = & \Sigma_X^{-1} \mathbf{X}^T \mathbf{Y}\\ \label{eq:4p03_1}
+& = & \hat{\Sigma}^{-1} \mathbf{X}^T \mathbf{Y} \left((N - K) + \mathcal{N}^{-1} \mathbf{Y}^T
+\hat{\Sigma}^{-1} \mathbf{X}^T \mathbf{Y}\right)^{-1} \equiv 
+   \hat{\Sigma}^{-1} \mathbf{X}^T \mathbf{Y}\, \Sigma_Y^{-1} \\
+   \Sigma_Y & \equiv & (N - K) + \mathcal{N}^{-1} \mathbf{Y}^T
+   \hat{\Sigma}^{-1} \mathbf{X}^T \mathbf{Y}
+\end{eqnarray}
+Now, consider the following $(1, p)$ matrix:
+\begin{equation} \label{eq:4p03_2}
+g(x) \equiv x^T \hat{\Sigma}^{-1} \mathcal{M} = x^T \hat{\Sigma}^{-1} \mathbf{X}^T \mathbf{Y} \mathcal{N}^{-1}
+\end{equation}
+Aside from the $\log{\hat{\pi}_k}$ terms, which do not change when we move from
+$x$ to $\hat{B}^T x$, the two terms in the LDA discriminant functions are
+just elements taken from this matrix, for different values of $x$:
+\begin{equation*}
+x^T \hat{\Sigma}^{-1} \mu_k - \frac{1}{2} \hat{\mu}_k^T \hat{\Sigma}^{-1} \mu_k = 
+(f(x))_k - \frac{1}{2} (g(\hat{\mu}_k))_k
+\end{equation*}
+Indeed, $\mathcal{M}$ contains the sample averages $\hat{\mu}_k$ as columns.
+Therefore, in order to prove that LDA gives the same results in $B^T x$-space,
+it suffices to show that $g(x)$ does not change with this transformation.
+Since the transformation is linear, all the changes are pretty straightforward:
+\begin{eqnarray}
+x & \rightarrow & \hat{B}^T \mathbf{X} \\
+\mathbf{X} & \rightarrow & \mathbf{X} \hat{B} \\
+\mathcal{M} & \rightarrow & \hat{B}^T \mathcal{M} \\
+\hat{\Sigma} & \rightarrow & \hat{B}^T \hat{\Sigma} \hat{B}
+\end{eqnarray}
+Hence:
+\begin{eqnarray*}
+    g'(x' = \hat{B}^T \mathbf{X})  =  x^T \hat{B} \left(\hat{B}^T \hat{\Sigma} \hat{B}\right)^{-1} \hat{B}^T \mathbf{X}^T \mathbf{Y} \mathcal{N}^{-1}
+\end{eqnarray*}
+Notice that $\hat{B}$ is not a square matrix, hence we cannot apply the
+inverse to each matrix in the product in the parentheses. If we replace twice 
+$\hat{B}$ according to \eqref{eq:4p03_1}, we obtain:
+\begin{eqnarray*}
+    g'(x' = \hat{B}^T \mathbf{X}) & = & x^T \hat{B} \left(
+        \hat{B}^T \mathbf{X}^T \mathbf{Y}\,\Sigma_Y^{-1}\right)^{-1} 
+        \hat{B}^T \mathbf{X}^T \mathbf{Y} \mathcal{N}^{-1} \\
+        & = & x^T \hat{B}\,\Sigma_Y \left(
+        \hat{B}^T \mathbf{X}^T \mathbf{Y}\right)^{-1} \hat{B}^T \mathbf{X}^T \mathbf{Y} \mathcal{N}^{-1}\\
+         & = & x^T \hat{B}\,\Sigma_Y \mathcal{N}^{-1} \\
+         & = & x^T \hat{\Sigma}^{-1} \mathbf{X}^T \mathbf{Y}\, \Sigma_Y^{-1} \,\Sigma_Y \mathcal{N}^{-1} \\
+         & = & x^T \hat{\Sigma}^{-1} \mathbf{X}^T \mathbf{Y} \mathcal{N}^{-1}
+\end{eqnarray*}
+which agrees with the expression \eqref{eq:4p03_2} in the original feature space.
